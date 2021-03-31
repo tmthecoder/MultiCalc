@@ -19,6 +19,7 @@ public class MainViewController: UIViewController {
     }
     func setupNavBar() {
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
+        view.backgroundColor = .systemBackground
         self.view.addSubview(navigationBar)
         let navigationItem = UINavigationItem(title: "DrawCalc")
         let clearButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.trash, target: nil, action: #selector(clearCanvas))
@@ -36,12 +37,16 @@ public class MainViewController: UIViewController {
         toolPicker.setVisible(true, forFirstResponder: canvas)
     }
     func initializeCanvas() {
-        let frame = CGRect(x: 0, y: 115, width: self.view.bounds.width, height: self.view.bounds.height-115)
+        let frame = CGRect(x: 0, y: 130, width: self.view.bounds.width, height: self.view.bounds.height-115)
         canvas = PKCanvasView(frame: frame)
+        if self.traitCollection.userInterfaceStyle == .dark {
+            canvas.backgroundColor = .clear 
+        }
         canvas.delegate = ocrHandler
         canvas.becomeFirstResponder()
         view.addSubview(canvas)
     }
+    
     func initializeOCR() {
         ocrHandler = OCRHandler(onResult: onOCRResult)
     }

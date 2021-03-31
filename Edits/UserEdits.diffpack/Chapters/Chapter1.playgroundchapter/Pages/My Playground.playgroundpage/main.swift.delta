@@ -7,12 +7,11 @@
 		<dict>
 			<key>ModifiedContent</key>
 			<string>import PlaygroundSupport
-import UIKit
 
 PlaygroundPage.current.setLiveView(MainViewController())
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 96}</string>
+			<string>{1, 83}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

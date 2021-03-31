@@ -36,6 +36,14 @@
 				<key>File</key>
 				<string>UserModules/MainModule.playgroundmodule/Sources/ExpressionLabel.swift</string>
 			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/MainModule.playgroundmodule/Sources/EquationParseHandler.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/EquationComponentModule.playgroundmodule/Sources/Expression.swift</string>
+			</dict>
 		</array>
 		<key>Modified</key>
 		<array>
