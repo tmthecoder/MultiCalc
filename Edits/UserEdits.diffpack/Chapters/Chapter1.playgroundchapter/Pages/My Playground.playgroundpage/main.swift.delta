@@ -9,13 +9,10 @@
 			<string>import PlaygroundSupport
 import UIKit
 
-PlaygroundPage.current.wantsFullScreenLiveView = true
-let view = MainView()
-view.preferredContentSize = CGSize(width: 600, height: 400);
-PlaygroundPage.current.setLiveView(view)
+PlaygroundPage.current.setLiveView(MainViewController())
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 217}</string>
+			<string>{1, 96}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

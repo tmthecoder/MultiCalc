@@ -18,15 +18,23 @@
 		<array>
 			<dict>
 				<key>File</key>
-				<string>UserModules/UserModule.playgroundmodule/Sources/ContentView.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
 				<string>Chapters/Chapter1.playgroundchapter/UserManifest.plist</string>
 			</dict>
 			<dict>
 				<key>File</key>
 				<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/UserManifest.plist</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/MainModule.playgroundmodule/Sources/MainViewController.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/MainModule.playgroundmodule/Sources/OCRHandler.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/MainModule.playgroundmodule/Sources/ExpressionLabel.swift</string>
 			</dict>
 		</array>
 		<key>Modified</key>
