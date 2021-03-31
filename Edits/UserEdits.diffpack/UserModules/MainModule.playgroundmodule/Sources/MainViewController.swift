@@ -54,6 +54,7 @@ public class MainViewController: UIViewController {
     
     @objc func clearCanvas() {
         canvas.drawing = PKDrawing()
+        expressionLabel.text = ""
     }
 }
 
