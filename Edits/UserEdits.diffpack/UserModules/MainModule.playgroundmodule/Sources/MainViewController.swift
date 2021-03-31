@@ -7,6 +7,7 @@ public class MainViewController: UIViewController {
     var toolPicker: PKToolPicker!
     var canvas: PKCanvasView!
     var ocrHandler: OCRHandler!
+    var expressionLabel = ExpressionLabel()
     
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -26,7 +27,6 @@ public class MainViewController: UIViewController {
         view.addSubview(navigationBar)
     }
     func setupLabel() {
-        let expressionLabel = ExpressionLabel()
         expressionLabel.frame = CGRect(x: 0, y: 45, width: self.view.bounds.width, height: 70)
         self.view.addSubview(expressionLabel)
     }
@@ -47,7 +47,9 @@ public class MainViewController: UIViewController {
     }
     
     func onOCRResult(result: String) {
-        
+        DispatchQueue.main.sync {
+            expressionLabel.text = result
+        }
     }
     
     @objc func clearCanvas() {
