@@ -44,6 +44,26 @@
 				<key>File</key>
 				<string>UserModules/EquationComponentModule.playgroundmodule/Sources/Expression.swift</string>
 			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/EquationComponentModule.playgroundmodule/Sources/Term.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/EquationComponentModule.playgroundmodule/Sources/Operation.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/MainModule.playgroundmodule/Sources/GraphView.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/MainModule.playgroundmodule/Sources/GraphingCalculator.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/MainModule.playgroundmodule/Sources/Graph.swift</string>
+			</dict>
 		</array>
 		<key>Modified</key>
 		<array>

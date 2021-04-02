@@ -7,11 +7,14 @@
 		<dict>
 			<key>ModifiedContent</key>
 			<string>import PlaygroundSupport
+//  Expression.parseOperations(expressionString: "(1+2) + 3 -4")
 
-PlaygroundPage.current.setLiveView(MainViewController())
+PlaygroundPage.current.setLiveView(GraphingCalculator())
+
+
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 83}</string>
+			<string>{1, 150}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

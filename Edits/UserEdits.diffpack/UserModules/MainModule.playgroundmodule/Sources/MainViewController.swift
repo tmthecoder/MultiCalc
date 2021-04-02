@@ -44,6 +44,7 @@ public class MainViewController: UIViewController {
         return button
     }
     func setupLabel() {
+        expressionLabel = ExpressionLabel()
         expressionLabel.frame = CGRect(x: 0, y: 45, width: self.view.bounds.width, height: 80)
         resetLabel()
         self.view.addSubview(expressionLabel)
