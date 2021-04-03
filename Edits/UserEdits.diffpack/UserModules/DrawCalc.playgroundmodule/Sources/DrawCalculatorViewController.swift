@@ -1,13 +1,15 @@
 import UIKit
 import PencilKit
 import PlaygroundSupport
+import EquationParser
 
+/// The UIViewController for the actual Draw Calculator View
 public class DrawCalculatorViewController: UIViewController {
     
     // All the class's used UI components
-    var canvas: PKCanvasView!
-    var navigationBar: UINavigationBar!
-    var expressionLabel: ExpressionLabel!
+    var canvas = PKCanvasView()
+    var navigationBar = UINavigationBar()
+    var expressionLabel = UITextView()
     
     // The handler for OCR operations
     var ocrHandler: OCRHandler!
@@ -18,6 +20,7 @@ public class DrawCalculatorViewController: UIViewController {
         super.viewDidLayoutSubviews()
         // OCR initialization
         initializeOCR()
+        // UI Initialization
         setupNavBar()
         initializeCanvas()
         initializeLabel()
@@ -32,7 +35,6 @@ public class DrawCalculatorViewController: UIViewController {
     /// A Method to setup the navigation bar and its shown buttons
     /// Currently sets the title and adds the canvas clear and erase buttons
     func setupNavBar() {
-        navigationBar = UINavigationBar()
         view.backgroundColor = .systemBackground
         self.view.addSubview(navigationBar)
         // Create the actual item and add both right bar button items
@@ -66,14 +68,13 @@ public class DrawCalculatorViewController: UIViewController {
         if let selected = selected {
             button.setImage(selected, for: .selected)
         }
-        button.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         return button
     }
     
     /// A method to initialize the drawable PKCanvas with the OCRHandler as its delegate
     /// Sets the default tool as well
     func initializeCanvas() {
-        canvas = PKCanvasView()
         canvas.backgroundColor = .clear 
         canvas.delegate = ocrHandler
         canvas.becomeFirstResponder()
@@ -83,7 +84,11 @@ public class DrawCalculatorViewController: UIViewController {
     
     /// A method to initialize the top expression label
     func initializeLabel() {
-        expressionLabel = ExpressionLabel()
+        expressionLabel.font = .systemFont(ofSize: 25)
+        expressionLabel.isScrollEnabled = false
+        expressionLabel.textAlignment = .center
+        expressionLabel.isEditable = false
+        expressionLabel.textContainer.maximumNumberOfLines = 1
         view.addSubview(expressionLabel)
     }
     
@@ -94,9 +99,8 @@ public class DrawCalculatorViewController: UIViewController {
     
     /// A method to initialize all of the UI constraints on this ViewController
     func initializeConstraints() {
-        // Get the passed TabBar
+        // Get the TabBar
         let tabBar = tabBarController!.tabBar
-        
         // Set up all constraints for the navigation bar
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -105,7 +109,6 @@ public class DrawCalculatorViewController: UIViewController {
             navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor),
             navigationBar.heightAnchor.constraint(equalToConstant: 45)
         ])
-        
         // Setup all constraints for the expressionLabel
         expressionLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -114,7 +117,6 @@ public class DrawCalculatorViewController: UIViewController {
             expressionLabel.leftAnchor.constraint(equalTo: view.leftAnchor),
             expressionLabel.heightAnchor.constraint(equalToConstant: 80)
         ])
-        
         // Setup all constraints for the canvas
         canvas.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -126,7 +128,9 @@ public class DrawCalculatorViewController: UIViewController {
     }
     
     /// A callback method with a given OCR Result
+    /// TODO Parse the result into an Expression and provide a solution
     func onOCRResult(result: String) {
+//          Expression.parseOperations(expressionString: result)
         DispatchQueue.main.sync {
             expressionLabel.textColor = self.traitCollection.userInterfaceStyle == .dark ? .lightText : .darkText
             expressionLabel.font = .systemFont(ofSize: 50)
@@ -134,19 +138,25 @@ public class DrawCalculatorViewController: UIViewController {
         }
     }
     
+    /// A convenience method to reset the label to its placeholder type state
     func resetLabel() {
+        // Changes the fontsize and color while setting it to the default string
+        print("resetting")
         expressionLabel.font = .systemFont(ofSize: 30)
         expressionLabel.textAlignment = .center
         expressionLabel.textColor = .placeholderText
         expressionLabel.text = "Write Problem Below"
     }
     
+    /// A method to clear the current drawing on the canvas
     @objc func clearCanvas() {
         canvas.drawing = PKDrawing()
         resetLabel()
     }
     
+    /// A method to toggle between eraser and pen functionality
     @objc func toggleEraser(sender: UIButton) {
+        // Change the selected state and the tool
         sender.isSelected.toggle()
         if sender.isSelected {
             canvas.tool = PKEraserTool(.bitmap)

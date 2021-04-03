@@ -20,7 +20,7 @@ public class OCRHandler : NSObject, PKCanvasViewDelegate {
         let request = VNRecognizeTextRequest(completionHandler: onRecognitionComplete)
         request.recognitionLanguages = ["en_US"]
         // Set the words to give precidence to when detecting (math terms)
-        request.customWords = ["+", "-", "/", "*", "x", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "sin", "cos", "tan"]
+        request.customWords = ["+", "-", "/", "*", "x", "÷", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "sin", "cos", "tan"]
         do {
             try requestHandler.perform([request])
         } catch {
@@ -42,12 +42,14 @@ public class OCRHandler : NSObject, PKCanvasViewDelegate {
     }
     
     public func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        print("Changed")
         self.timestamp = Int(round(Date().timeIntervalSince1970 * 1000)) 
         DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 1.5) {
             let nowTime = Int(round(Date().timeIntervalSince1970 * 1000)) 
             print(nowTime - self.timestamp)
             if Int(nowTime) - self.timestamp < 1500 {
+                return
+            }
+            if canvasView.drawing.strokes.count == 0 {
                 return
             }
             let image = canvasView.drawing.image(from: canvasView.bounds, scale: UIScreen.main.scale)

@@ -26,15 +26,7 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/DrawCalc.playgroundmodule/Sources/ExpressionLabel.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
 				<string>UserModules/DrawCalc.playgroundmodule/Sources/OCRHandler.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/DrawCalc.playgroundmodule/Sources/EquationParseHandler.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>

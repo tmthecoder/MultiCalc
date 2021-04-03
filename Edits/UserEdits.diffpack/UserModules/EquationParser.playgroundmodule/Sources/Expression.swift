@@ -16,7 +16,7 @@ public struct Expression {
         }
         var seqCount = 0
         var splitDict: [Int : String] = [:] 
-        
+        /// Upper < Lower (What?)
         for i in 0..<(matches.count-1) {
             let operatorLower = expressionString.index(expressionString.startIndex, offsetBy: matches[i].range.upperBound)
             let operaterUpper = expressionString.index(expressionString.startIndex, offsetBy: matches[i+1].range.lowerBound)
