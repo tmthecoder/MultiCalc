@@ -26,43 +26,47 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/MainModule.playgroundmodule/Sources/MainViewController.swift</string>
+				<string>UserModules/DrawCalc.playgroundmodule/Sources/ExpressionLabel.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/MainModule.playgroundmodule/Sources/OCRHandler.swift</string>
+				<string>UserModules/DrawCalc.playgroundmodule/Sources/OCRHandler.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/MainModule.playgroundmodule/Sources/ExpressionLabel.swift</string>
+				<string>UserModules/DrawCalc.playgroundmodule/Sources/MainViewController.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/MainModule.playgroundmodule/Sources/EquationParseHandler.swift</string>
+				<string>UserModules/DrawCalc.playgroundmodule/Sources/EquationParseHandler.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/EquationComponentModule.playgroundmodule/Sources/Expression.swift</string>
+				<string>UserModules/EquationParser.playgroundmodule/Sources/Expression.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/EquationComponentModule.playgroundmodule/Sources/Term.swift</string>
+				<string>UserModules/EquationParser.playgroundmodule/Sources/Term.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/EquationComponentModule.playgroundmodule/Sources/Operation.swift</string>
+				<string>UserModules/EquationParser.playgroundmodule/Sources/Operation.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/MainModule.playgroundmodule/Sources/GraphView.swift</string>
+				<string>UserModules/GraphCalc.playgroundmodule/Sources/Graph.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/MainModule.playgroundmodule/Sources/GraphingCalculator.swift</string>
+				<string>UserModules/GraphCalc.playgroundmodule/Sources/GraphView.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/MainModule.playgroundmodule/Sources/Graph.swift</string>
+				<string>UserModules/GraphCalc.playgroundmodule/Sources/GraphingCalculatorViewController.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/GraphCalc.playgroundmodule/Sources/PointValueView.swift</string>
 			</dict>
 		</array>
 		<key>Modified</key>

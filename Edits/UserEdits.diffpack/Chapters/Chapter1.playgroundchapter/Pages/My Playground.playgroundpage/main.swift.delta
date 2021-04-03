@@ -9,12 +9,12 @@
 			<string>import PlaygroundSupport
 //  Expression.parseOperations(expressionString: "(1+2) + 3 -4")
 
-PlaygroundPage.current.setLiveView(GraphingCalculator())
+PlaygroundPage.current.setLiveView(GraphingCalculatorViewController())
 
 
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 150}</string>
+			<string>{1, 164}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>

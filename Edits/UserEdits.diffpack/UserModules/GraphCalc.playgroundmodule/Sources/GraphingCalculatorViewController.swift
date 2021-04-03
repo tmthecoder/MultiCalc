@@ -1,9 +1,8 @@
 
-import Foundation
-import UIKit
-import CoreGraphics
 
-public class GraphingCalculator : UIViewController {
+import UIKit
+
+public class GraphingCalculatorViewController : UIViewController {
     var graphView = GraphView()
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()

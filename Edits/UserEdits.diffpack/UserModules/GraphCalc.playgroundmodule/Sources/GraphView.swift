@@ -1,6 +1,6 @@
 
+
 import UIKit
-import CoreGraphics
 
 class GraphView: UIView {
     
@@ -11,12 +11,17 @@ class GraphView: UIView {
     var yAxisLayer: CAShapeLayer?
     var xAxisDividers: CAShapeLayer?
     var yAxisDividers: CAShapeLayer?
+    
     // The variable to control whether a graph is currently displayed
     var currentGraph: Graph?
     var currentGraphLayer: CAShapeLayer?
     
+    // Distance between each divider on the graph
     var xMarkerDistance = 30.0
     var yMarkerDistance = 30.0
+    
+    // Array of UILabels currently being used to display a numerical marker
+    var markerValues: [UILabel] = []
     
     /// Remove the existing layers if they exist and draw the layers
     override func draw(_ rect: CGRect) {
@@ -26,8 +31,9 @@ class GraphView: UIView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let point = touches.first?.location(in: self) else { return }
-        print(point)
-        print(currentGraphLayer?.path?.contains(point))
+        let xValue = Double(point.x)/xMarkerDistance - Double(self.bounds.width/2)
+        let yValue = currentGraph!.getPointY(x: xValue)
+        
     }
     
     /// Method to remove the existing layers if they actually exist
@@ -39,16 +45,19 @@ class GraphView: UIView {
         xAxisDividers?.removeFromSuperlayer()
         yAxisDividers?.removeFromSuperlayer()
         currentGraphLayer?.removeFromSuperlayer()
+        removeCounters()
     }
     
-    /// Method to create each of the four layers. Creates them 
-    /// based on axis and for the separaters, the distance between each 
+    /// Method to create each of the four layers. 
+    /// Creates them based on axis and for the separaters, the distance between each 
     func createLayers() {
         xAxisLayer = drawAxis(xAxis: true)
         yAxisLayer = drawAxis(xAxis: false)
         xAxisDividers = drawAxisMarkers(distance: xMarkerDistance, xAxis: true)
         yAxisDividers = drawAxisMarkers(distance: yMarkerDistance, xAxis: false)
         currentGraphLayer = currentGraph?.display(view: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
+        addCounters(increment: 1, xAxis: true)
+        addCounters(increment: 1, xAxis: false)
     }
     
     /// The main method to draw an axis
@@ -86,12 +95,12 @@ class GraphView: UIView {
         if count % 2 != 0 {
             count -= 1
         }
+        // Get the centers of both axes
+        let centerX = self.bounds.width/2
+        let centerY = self.bounds.height/2
+        let usedAxisDistance = xAxis ? centerX : centerY
         // Loop from a negative to positive range so the center is sure to be the origin
         for i in (-count/2 + 1)...(count/2 - 1) {
-            // Get the centers of both axes
-            let centerX = self.bounds.width/2
-            let centerY = self.bounds.height/2
-            let usedAxisDistance = xAxis ? centerX : centerY
             let constDistance = Double(usedAxisDistance) + distance * Double(i)
             // Create both points for the line and add it to the path
             let point1 = CGPoint(x: xAxis ? constDistance : Double(centerX)-10, y: xAxis ? Double(centerY-10) : constDistance)
@@ -100,5 +109,48 @@ class GraphView: UIView {
         }
         dividerLayer.path = dividerPath
         return dividerLayer
+    }
+    
+    /// Method to show the correct counter value at the right position.
+    /// Shown values based on the given increments
+    func addCounters(increment: Double, xAxis: Bool) {
+        let usedAxis = Double((xAxis ? self.bounds.width : self.bounds.height)/2)
+        var count = Int(xAxis ? self.bounds.width : self.bounds.height) / Int(xAxis ? xMarkerDistance : yMarkerDistance)
+        // Make sure the count goes through the origin, so all spacing is even between axes
+        if count % 2 != 0 {
+            count -= 1
+        }
+        // Get the centers of both axes
+        let centerX = self.bounds.width/2
+        let centerY = self.bounds.height/2
+        let usedAxisDistance = xAxis ? centerX : centerY
+        // Loop from a negative to positive range so the center is sure to be the origin
+        for i in (-count/2 + 1)...(count/2 - 1) {
+            if i % 5 == 0  && i != 0{
+                print(i)
+                let constDistance = Double(usedAxisDistance) + (xAxis ? xMarkerDistance : yMarkerDistance) * Double(i)
+                print(constDistance)
+                let initialFrame = CGRect(x: xAxis ? constDistance : Double(centerX + 15), y: xAxis ? Double(centerY + 15) : constDistance, width: 50, height: 30)
+                let label = UILabel(frame: initialFrame)
+                label.text = "\(increment * Double(i))"
+                if i < 0 {
+                    label.text!+=" "
+                }
+                label.sizeToFit()
+                let finalX = xAxis ? label.frame.minX - label.frame.width/2 : label.frame.minX
+                let finalY = xAxis ? label.frame.minY : label.frame.minY - label.frame.height/2
+                let finalFrame = CGRect(x: finalX, y: finalY, width: label.frame.width, height: label.frame.height)
+                label.frame = finalFrame
+                label.textColor = .white
+                markerValues.append(label)
+                addSubview(label)
+            }
+        }
+    }
+    
+    func removeCounters() {
+        for label in markerValues {
+            label.removeFromSuperview()
+        }
     }
 }
