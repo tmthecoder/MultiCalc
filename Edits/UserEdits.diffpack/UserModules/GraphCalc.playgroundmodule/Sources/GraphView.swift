@@ -23,6 +23,8 @@ class GraphView: UIView {
     // Array of UILabels currently being used to display a numerical marker
     var markerValues: [UILabel] = []
     
+    var currentPointView: PointValueView?
+    
     /// Remove the existing layers if they exist and draw the layers
     override func draw(_ rect: CGRect) {
         removeExistingLayers()
@@ -30,11 +32,30 @@ class GraphView: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let point = touches.first?.location(in: self) else { return }
-        let xValue = Double(point.x)/xMarkerDistance - Double(self.bounds.width/2)
-        let yValue = currentGraph!.getPointY(x: xValue)
-        
-    }
+        // Get the point that was hit and make sure the point is within the graph bounds
+        guard let point = touches.first?.location(in: self),
+              let currentGraph = currentGraph else {return}
+        if currentGraphLayer?.path == nil || !currentGraphLayer!.path!.contains(point) {return} 
+        // Get the adjusted point's x and y values (the one on the actual line)
+        let adjPoint = currentGraph.pointForTap(for: self, point: point, xScale: xMarkerDistance, yScale: yMarkerDistance)
+        // Transform the values to a localized version
+        let xValue = (Double(adjPoint.x) - Double(self.bounds.width/2))/xMarkerDistance
+        let yValue = currentGraph.getPointY(x: xValue)
+        // Animate to the position if the view is already shown or create a new one if not
+        if let currentPointView = currentPointView {
+            UIView.animate(withDuration: 0.5) {
+                currentPointView.xValue = xValue
+                currentPointView.yValue = yValue
+                currentPointView.setNeedsDisplay()
+                currentPointView.frame = CGRect(x: adjPoint.x + 15, y: adjPoint.y + 15, width: 120, height: 50)
+            }
+        } else {
+            let frame = CGRect(x: adjPoint.x+15, y: adjPoint.y+15, width: 120, height: 50)
+            currentPointView = PointValueView(xValue: xValue, yValue: yValue, frame: frame)
+            guard let currentPointView = currentPointView else {return}
+            addSubview(currentPointView)
+        }
+}
     
     /// Method to remove the existing layers if they actually exist
     /// Prevents a redraw of the axis, which may show multiple axes 
@@ -61,7 +82,7 @@ class GraphView: UIView {
         addCounters(increment: 5, xAxis: true)
         addCounters(increment: 1, xAxis: false)
         // Create the current graph
-        currentGraphLayer = currentGraph?.display(view: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
+        currentGraphLayer = currentGraph?.display(for: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
     }
     
     /// The main method to draw an axis

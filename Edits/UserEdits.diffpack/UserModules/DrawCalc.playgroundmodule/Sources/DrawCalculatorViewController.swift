@@ -2,7 +2,7 @@ import UIKit
 import PencilKit
 import PlaygroundSupport
 
-public class MainViewController: UIViewController {
+public class DrawCalculatorViewController: UIViewController {
     
     var toolPicker: PKToolPicker!
     var canvas: PKCanvasView!

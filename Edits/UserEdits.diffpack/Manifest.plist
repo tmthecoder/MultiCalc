@@ -34,10 +34,6 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/DrawCalc.playgroundmodule/Sources/MainViewController.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
 				<string>UserModules/DrawCalc.playgroundmodule/Sources/EquationParseHandler.swift</string>
 			</dict>
 			<dict>
@@ -67,6 +63,10 @@
 			<dict>
 				<key>File</key>
 				<string>UserModules/GraphCalc.playgroundmodule/Sources/PointValueView.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/DrawCalc.playgroundmodule/Sources/DrawCalculatorViewController.swift</string>
 			</dict>
 		</array>
 		<key>Modified</key>
