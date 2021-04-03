@@ -10,9 +10,12 @@ struct Graph {
         return x * x;
     }
     func pointForTap(for view: UIView, point: CGPoint, xScale: Double, yScale: Double) -> CGPoint{
-        let tapY = round(point.y * 100)/100
+        // Get the tapped position and localize it
+        let tapY = point.y
         let localY = Double(tapY - view.bounds.height/2) / -yScale
-        print(localY)
+        // Use that with the function inverse to get the x-coordinate and get the actual plane coordinate
+        // TODO please fix the issue with having function domain and ranges
+        // TODO also fix the issue with function double returns when inverting (parabolas y --> x) 
         let localX = sqrt(max(localY, 0))
         let adjX = Double(view.bounds.width)/2 + (localX * xScale)
         print(adjX)

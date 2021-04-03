@@ -3,9 +3,9 @@ enum ParsableType {
     case number, operation
 }
 public struct Expression {
-    var terms: [Term]
+    let operation: Operation
     public static func fromString() -> Expression {
-        return Expression(terms: [Term(value: 0.0)])
+        return Expression(operation: .number(0.0))
     }
     public static func parseOperations(expressionString: String){
         let expressionString = expressionString.replacingOccurrences(of: " ", with: "", options: .literal, range: nil)
