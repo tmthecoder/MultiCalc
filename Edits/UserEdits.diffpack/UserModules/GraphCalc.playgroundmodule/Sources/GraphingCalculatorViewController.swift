@@ -11,9 +11,13 @@ public class GraphingCalculatorViewController : UIViewController {
     
     func initializeGraph() {
         view.backgroundColor = .systemBackground
-        graphView.frame = view.bounds
-        graphView.layer.setNeedsDisplay()
+        let tabBar = tabBarController!.tabBar
         view.addSubview(graphView)
+        graphView.translatesAutoresizingMaskIntoConstraints = false
+        graphView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        graphView.bottomAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
+        graphView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        graphView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         graphView.currentGraph = Graph(expression: "Hi")
     }
     

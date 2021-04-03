@@ -15,7 +15,7 @@ public class DrawCalculatorViewController: UIViewController {
         setupNavBar()
         initializeCanvas()
         setupLabel()
-}
+    }
     func setupNavBar() {
         let navigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 45))
         view.backgroundColor = .systemBackground
@@ -27,19 +27,24 @@ public class DrawCalculatorViewController: UIViewController {
     }
     
     func createTrashItem() -> UIBarButtonItem {
-        let button = createButtonItem(symbolName: "trash")
+        let button = createButtonItem(image: UIImage(systemName: "trash")!)
         button.addTarget(self, action: #selector(clearCanvas), for: .touchUpInside)
         return UIBarButtonItem(customView: button)
     }
     
     func createEraseItem() -> UIBarButtonItem {
-        let button = createButtonItem(symbolName: "pencil.slash")
+        let highlighted = UIImage(systemName: "scribble")
+        let button = createButtonItem(image: UIImage(named: "erase")!.withTintColor(.systemBlue), selected: highlighted)
+        button.addTarget(self, action: #selector(toggleEraser(sender:)), for: .touchUpInside)
         return UIBarButtonItem(customView: button)
     }
     
-    func createButtonItem(symbolName: String) -> UIButton {
+    func createButtonItem(image: UIImage, selected: UIImage? = nil) -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(systemName: symbolName), for: .normal)
+        button.setImage(image, for: .normal)
+        if let selected = selected {
+            button.setImage(selected, for: .selected)
+        }
         button.frame = CGRect.init(x: 0, y: 0, width: 40, height: 40)
         return button
     }
@@ -81,6 +86,15 @@ public class DrawCalculatorViewController: UIViewController {
     @objc func clearCanvas() {
         canvas.drawing = PKDrawing()
         resetLabel()
+    }
+    
+    @objc func toggleEraser(sender: UIButton) {
+        sender.isSelected.toggle()
+        if sender.isSelected {
+            canvas.tool = PKEraserTool(.bitmap)
+        } else {
+            canvas.tool = PKInkingTool(.pen, color: .blue, width: 20)
+        }
     }
 }
 

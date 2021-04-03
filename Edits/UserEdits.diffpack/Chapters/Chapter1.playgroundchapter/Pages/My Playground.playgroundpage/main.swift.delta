@@ -7,18 +7,43 @@
 		<dict>
 			<key>ModifiedContent</key>
 			<string>import PlaygroundSupport
-//  Expression.parseOperations(expressionString: "(1+2) + 3 -4")
+import UIKit
 
-PlaygroundPage.current.setLiveView(GraphingCalculatorViewController())
+PlaygroundPage.current.setLiveView(MainTabController())
 
-
+class MainTabController : UITabBarController, UITabBarControllerDelegate {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let drawController = createTabBarItem(title: "Draw", image: UIImage(systemName: "hand.draw")!, selectedImage: UIImage(systemName: "hand.draw.fill")!, controller: DrawCalculatorViewController())
+        let openImage = UIImage(named: "graph")!
+        let filledImage = UIImage(named: "graph_fill")!
+        let graphController = createTabBarItem(title: "Graph", image: openImage, selectedImage: filledImage, controller: GraphingCalculatorViewController())
+        let controllers = [drawController, graphController]
+        self.viewControllers = controllers
+    }
+    
+    func createTabBarItem(title: String, image: UIImage, selectedImage: UIImage, controller: UIViewController) -&gt; UIViewController {
+        let item = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
+        controller.tabBarItem = item
+        return controller
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -&gt; Bool {
+        return true;
+    }
+}
 </string>
 			<key>ModifiedRange</key>
-			<string>{1, 164}</string>
+			<string>{0, 1387}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
-			<string>{1, 0}</string>
+			<string>{0, 0}</string>
 		</dict>
 	</array>
 	<key>File</key>
