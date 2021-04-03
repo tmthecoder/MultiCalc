@@ -51,13 +51,17 @@ class GraphView: UIView {
     /// Method to create each of the four layers. 
     /// Creates them based on axis and for the separaters, the distance between each 
     func createLayers() {
+        // Create Axes
         xAxisLayer = drawAxis(xAxis: true)
         yAxisLayer = drawAxis(xAxis: false)
+        // Create markers for axes
         xAxisDividers = drawAxisMarkers(distance: xMarkerDistance, xAxis: true)
         yAxisDividers = drawAxisMarkers(distance: yMarkerDistance, xAxis: false)
-        currentGraphLayer = currentGraph?.display(view: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
-        addCounters(increment: 1, xAxis: true)
+        // Create the counters for both axes
+        addCounters(increment: 5, xAxis: true)
         addCounters(increment: 1, xAxis: false)
+        // Create the current graph
+        currentGraphLayer = currentGraph?.display(view: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
     }
     
     /// The main method to draw an axis
@@ -127,27 +131,31 @@ class GraphView: UIView {
         // Loop from a negative to positive range so the center is sure to be the origin
         for i in (-count/2 + 1)...(count/2 - 1) {
             if i % 5 == 0  && i != 0{
-                print(i)
+                // Get the distance each textual marker will be placed at
                 let constDistance = Double(usedAxisDistance) + (xAxis ? xMarkerDistance : yMarkerDistance) * Double(i)
-                print(constDistance)
+                // Create an initial frame without text sizing in mind
                 let initialFrame = CGRect(x: xAxis ? constDistance : Double(centerX + 15), y: xAxis ? Double(centerY + 15) : constDistance, width: 50, height: 30)
                 let label = UILabel(frame: initialFrame)
                 label.text = "\(increment * Double(i))"
                 if i < 0 {
-                    label.text!+=" "
+                    label.text!+=" " // Add a trailing space for alignment of negatives to the marker
                 }
+                // Size the label and create the final frame based off of the positions and height/width offsets
                 label.sizeToFit()
                 let finalX = xAxis ? label.frame.minX - label.frame.width/2 : label.frame.minX
                 let finalY = xAxis ? label.frame.minY : label.frame.minY - label.frame.height/2
                 let finalFrame = CGRect(x: finalX, y: finalY, width: label.frame.width, height: label.frame.height)
                 label.frame = finalFrame
                 label.textColor = .white
+                // Add the label to the array (for removal when/if needed) and as a subview
                 markerValues.append(label)
                 addSubview(label)
             }
         }
     }
     
+    /// Method to remove the counters from their stored array
+    /// Loops through and removes each from the superview (this view)
     func removeCounters() {
         for label in markerValues {
             label.removeFromSuperview()
