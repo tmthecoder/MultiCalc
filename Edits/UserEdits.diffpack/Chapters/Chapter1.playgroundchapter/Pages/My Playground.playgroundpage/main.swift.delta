@@ -9,7 +9,9 @@
 			<string>import PlaygroundSupport
 import UIKit
 
-PlaygroundPage.current.setLiveView(MainTabController())
+ParseHelper.instance.parseExpression(from: "(1 + 1) - (2 + 2) + (3 + 3)", numeric: true)
+
+//  PlaygroundPage.current.setLiveView(MainTabController())
 
 class MainTabController : UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
@@ -39,7 +41,7 @@ class MainTabController : UITabBarController, UITabBarControllerDelegate {
 }
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 1387}</string>
+			<string>{0, 1481}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
