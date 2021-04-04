@@ -24,7 +24,6 @@ public class DrawCalculatorViewController: UIViewController {
         setupNavBar()
         initializeCanvas()
         initializeLabel()
-        initializeConstraints()
     }
     
     /// Make sure all constraints and subviews are loaded and then set up the label view
@@ -36,12 +35,13 @@ public class DrawCalculatorViewController: UIViewController {
     /// Currently sets the title and adds the canvas clear and erase buttons
     func setupNavBar() {
         view.backgroundColor = .systemBackground
-        self.view.addSubview(navigationBar)
         // Create the actual item and add both right bar button items
         let navigationItem = UINavigationItem(title: "DrawCalc")
         navigationItem.rightBarButtonItems = [createTrashItem(), createEraseItem()]
         navigationBar.setItems([navigationItem], animated: false)
-        view.addSubview(navigationBar)
+        if navigationBar.superview == nil {
+            view.addSubview(navigationBar)
+        }
     }
     
     /// A method to create the item for the canvas clear button
@@ -79,7 +79,9 @@ public class DrawCalculatorViewController: UIViewController {
         canvas.delegate = ocrHandler
         canvas.becomeFirstResponder()
         canvas.tool = PKInkingTool(.pen, color: .blue, width: 20)
-        view.addSubview(canvas)
+        if canvas.superview == nil {
+            view.addSubview(canvas)
+        }
     }
     
     /// A method to initialize the top expression label
@@ -89,7 +91,10 @@ public class DrawCalculatorViewController: UIViewController {
         expressionLabel.textAlignment = .center
         expressionLabel.isEditable = false
         expressionLabel.textContainer.maximumNumberOfLines = 1
-        view.addSubview(expressionLabel)
+        if expressionLabel.superview == nil {
+            view.addSubview(expressionLabel)
+            initializeConstraints()
+        }
     }
     
     /// A method to initialize the OCR handler for this ViewController
