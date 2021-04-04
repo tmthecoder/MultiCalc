@@ -7,6 +7,7 @@ public class GraphingCalculatorViewController : UIViewController {
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         initializeGraph()
+        graphView.currentGraph = Graph(expression: "HI")
     }
     
     func initializeGraph() {
