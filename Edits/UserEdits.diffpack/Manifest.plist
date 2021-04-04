@@ -68,6 +68,10 @@
 				<key>File</key>
 				<string>UserModules/EquationParser.playgroundmodule/Sources/Untitled.swift</string>
 			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/GraphCalc.playgroundmodule/Sources/Point.swift</string>
+			</dict>
 		</array>
 		<key>Modified</key>
 		<array>

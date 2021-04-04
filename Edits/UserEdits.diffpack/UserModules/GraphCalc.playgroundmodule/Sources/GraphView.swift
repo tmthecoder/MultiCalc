@@ -27,6 +27,7 @@ class GraphView: UIView {
     
     /// Remove the existing layers if they exist and draw the layers
     override func draw(_ rect: CGRect) {
+        removePointView()
         removeExistingLayers()
         createLayers()
     }
@@ -35,12 +36,15 @@ class GraphView: UIView {
         // Get the point that was hit and make sure the point is within the graph bounds
         guard let point = touches.first?.location(in: self),
               let currentGraph = currentGraph else {return}
-        if currentGraphLayer?.path == nil || !currentGraphLayer!.path!.contains(point) {return} 
+        if currentGraphLayer?.path == nil || !currentGraphLayer!.path!.contains(point) {
+            removePointView()
+            return
+        }
         // Get the adjusted point's x and y values (the one on the actual line)
         let adjPoint = currentGraph.pointForTap(for: self, point: point, xScale: xMarkerDistance, yScale: yMarkerDistance)
         // Transform the values to a localized version
-        let xValue = (Double(adjPoint.x) - Double(self.bounds.width/2))/xMarkerDistance
-        let yValue = currentGraph.getPointY(x: xValue)
+        let xValue = (Double(adjPoint.x) - Double(self.bounds.width/2)) / xMarkerDistance
+        let yValue = (Double(adjPoint.y) - Double(self.bounds.height/2)) / -yMarkerDistance
         // Animate to the position if the view is already shown or create a new one if not
         if let currentPointView = currentPointView {
             UIView.animate(withDuration: 0.5) {
@@ -55,7 +59,7 @@ class GraphView: UIView {
             guard let currentPointView = currentPointView else {return}
             addSubview(currentPointView)
         }
-}
+    }
     
     /// Method to remove the existing layers if they actually exist
     /// Prevents a redraw of the axis, which may show multiple axes 
@@ -79,7 +83,7 @@ class GraphView: UIView {
         xAxisDividers = drawAxisMarkers(distance: xMarkerDistance, xAxis: true)
         yAxisDividers = drawAxisMarkers(distance: yMarkerDistance, xAxis: false)
         // Create the counters for both axes
-        addCounters(increment: 5, xAxis: true)
+        addCounters(increment: 1, xAxis: true)
         addCounters(increment: 1, xAxis: false)
         // Create the current graph
         currentGraphLayer = currentGraph?.display(for: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
@@ -90,7 +94,7 @@ class GraphView: UIView {
     func drawAxis(xAxis: Bool) -> CAShapeLayer {
         let axisLayer = CAShapeLayer()
         // Set the axis color (white on dark mode, black on light)
-        axisLayer.strokeColor = UIColor.white.cgColor
+        axisLayer.strokeColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
         // lineWidth and lineCap stay the same for axis creation
         axisLayer.lineWidth = 2
         axisLayer.lineCap = CAShapeLayerLineCap.square
@@ -109,7 +113,7 @@ class GraphView: UIView {
     func drawAxisMarkers(distance: Double, xAxis: Bool) -> CAShapeLayer {
         let dividerLayer = CAShapeLayer()
         // Set the marker color (white on dark mode, black on light)
-        dividerLayer.strokeColor = UIColor.white.cgColor
+        dividerLayer.strokeColor = traitCollection.userInterfaceStyle == .dark ? UIColor.white.cgColor : UIColor.black.cgColor
         // Width and lineCap stay the same, where the width is slightly less than the axis
         dividerLayer.lineWidth = 1.5
         dividerLayer.lineCap = CAShapeLayerLineCap.square
@@ -139,7 +143,6 @@ class GraphView: UIView {
     /// Method to show the correct counter value at the right position.
     /// Shown values based on the given increments
     func addCounters(increment: Double, xAxis: Bool) {
-        let usedAxis = Double((xAxis ? self.bounds.width : self.bounds.height)/2)
         var count = Int(xAxis ? self.bounds.width : self.bounds.height) / Int(xAxis ? xMarkerDistance : yMarkerDistance)
         // Make sure the count goes through the origin, so all spacing is even between axes
         if count % 2 != 0 {
@@ -167,7 +170,6 @@ class GraphView: UIView {
                 let finalY = xAxis ? label.frame.minY : label.frame.minY - label.frame.height/2
                 let finalFrame = CGRect(x: finalX, y: finalY, width: label.frame.width, height: label.frame.height)
                 label.frame = finalFrame
-                label.textColor = .white
                 // Add the label to the array (for removal when/if needed) and as a subview
                 markerValues.append(label)
                 addSubview(label)
@@ -181,5 +183,10 @@ class GraphView: UIView {
         for label in markerValues {
             label.removeFromSuperview()
         }
+    }
+    
+    func removePointView() {
+        currentPointView?.removeFromSuperview()
+        currentPointView = nil
     }
 }
