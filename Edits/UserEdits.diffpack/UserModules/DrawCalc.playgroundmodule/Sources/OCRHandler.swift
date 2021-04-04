@@ -31,11 +31,10 @@ public class OCRHandler : NSObject, PKCanvasViewDelegate {
     func onRecognitionComplete(request: VNRequest, error: Error?) {
         guard let observations =
                 request.results as? [VNRecognizedTextObservation] else {
-            print(error)
+            print("Error obtaining recognitions")
             return
         }
-        let recognizedStrings = observations.compactMap { observation in
-            print(observation)
+        for observation in observations {
             let finalString = observation.topCandidates(1).first?.string
             self.onResult(finalString ?? "")
         }
@@ -49,11 +48,12 @@ public class OCRHandler : NSObject, PKCanvasViewDelegate {
             if Int(nowTime) - self.timestamp < 1500 {
                 return
             }
-            if canvasView.drawing.strokes.count == 0 {
-                return
+            DispatchQueue.main.async {
+                let image = canvasView.drawing.image(from: canvasView.bounds, scale: UIScreen.main.scale)
+                DispatchQueue.global(qos: .userInteractive).async {
+                    self.getText(image: image.cgImage!)
+                }
             }
-            let image = canvasView.drawing.image(from: canvasView.bounds, scale: UIScreen.main.scale)
-            self.getText(image: image.cgImage!)
         }
     }
 }

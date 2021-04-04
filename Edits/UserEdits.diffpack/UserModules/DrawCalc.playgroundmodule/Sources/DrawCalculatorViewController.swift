@@ -1,7 +1,5 @@
 import UIKit
 import PencilKit
-import PlaygroundSupport
-import EquationParser
 
 /// The UIViewController for the actual Draw Calculator View
 public class DrawCalculatorViewController: UIViewController {
@@ -36,7 +34,7 @@ public class DrawCalculatorViewController: UIViewController {
     func setupNavBar() {
         view.backgroundColor = .systemBackground
         // Create the actual item and add both right bar button items
-        let navigationItem = UINavigationItem(title: "DrawCalc")
+        let navigationItem = UINavigationItem(title: "Draw")
         navigationItem.rightBarButtonItems = [createTrashItem(), createEraseItem()]
         navigationBar.setItems([navigationItem], animated: false)
         if navigationBar.superview == nil {
@@ -78,6 +76,7 @@ public class DrawCalculatorViewController: UIViewController {
         canvas.backgroundColor = .clear 
         canvas.delegate = ocrHandler
         canvas.becomeFirstResponder()
+        canvas.drawingPolicy = .anyInput
         canvas.tool = PKInkingTool(.pen, color: .blue, width: 20)
         if canvas.superview == nil {
             view.addSubview(canvas)
@@ -135,8 +134,9 @@ public class DrawCalculatorViewController: UIViewController {
     /// A callback method with a given OCR Result
     /// TODO Parse the result into an Expression and provide a solution
     func onOCRResult(result: String) {
-//          Expression.parseOperations(expressionString: result)
+        //          Expression.parseOperations(expressionString: result)
         DispatchQueue.main.sync {
+            if canvas.drawing.strokes.count == 0 {return}
             expressionLabel.textColor = self.traitCollection.userInterfaceStyle == .dark ? .lightText : .darkText
             expressionLabel.font = .systemFont(ofSize: 50)
             expressionLabel.text = result
@@ -146,7 +146,6 @@ public class DrawCalculatorViewController: UIViewController {
     /// A convenience method to reset the label to its placeholder type state
     func resetLabel() {
         // Changes the fontsize and color while setting it to the default string
-        print("resetting")
         expressionLabel.font = .systemFont(ofSize: 30)
         expressionLabel.textAlignment = .center
         expressionLabel.textColor = .placeholderText
