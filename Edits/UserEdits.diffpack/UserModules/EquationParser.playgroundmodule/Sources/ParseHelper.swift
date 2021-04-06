@@ -92,10 +92,10 @@ public class ParseHelper {
             // Proceed with the first instance of either multiplication or division (MD in PEMDAS)
             if let multIndex = operations.firstIndex(of: "*"), let divIndex = operations.firstIndex(of: "/") {
                 // Get the correct operator to use
-                let usedIndex = multIndex < divIndex ? divIndex : multIndex
+                let usedIndex = multIndex < divIndex ? multIndex : divIndex
                 // Get values and add them to the main store
                 let (lhs, rhs) = getExpressionParts(index: usedIndex)
-                allExpressions["store\(counter)"] = multIndex < divIndex ? .divide(lhs, rhs) : .multiply(lhs, rhs)
+                allExpressions["store\(counter)"] = multIndex < divIndex ? .multiply(lhs, rhs) : .divide(lhs, rhs)
                 counter+=1
                 continue
             } else if let multIndex = operations.firstIndex(of: "*") {
@@ -115,10 +115,10 @@ public class ParseHelper {
             // Proceed with the first instance of either addition or subtraction (AS in PEMDAS)
             if let addIndex = operations.firstIndex(of: "+"), let subIndex = operations.firstIndex(of: "-") {
                 // Get the correct operator to use
-                let usedIndex = addIndex < subIndex ? subIndex : addIndex
+                let usedIndex = addIndex < subIndex ? addIndex : subIndex
                 // Get the values and add them to the main store
                 let (lhs, rhs) = getExpressionParts(index: usedIndex)
-                allExpressions["store\(counter)"] = addIndex < subIndex ? .subtract(lhs, rhs) : .add(lhs, rhs)
+                allExpressions["store\(counter)"] = addIndex < subIndex ? .add(lhs, rhs) : .subtract(lhs, rhs)
                 counter+=1
                 continue
             } else if let addIndex = operations.firstIndex(of: "+") {
@@ -130,7 +130,7 @@ public class ParseHelper {
             } else if let subIndex = operations.firstIndex(of: "-") {
                 // No addition in the subExpression, so proceed with only addition
                 let (lhs, rhs) = getExpressionParts(index: subIndex)
-                allExpressions["store\(counter)"] = .divide(lhs, rhs)
+                allExpressions["store\(counter)"] = .subtract(lhs, rhs)
                 counter+=1
                 continue
             }
@@ -144,5 +144,4 @@ public class ParseHelper {
         
         return expression
     }
-    
 }
