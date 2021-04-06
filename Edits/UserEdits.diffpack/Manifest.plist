@@ -30,14 +30,6 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/EquationParser.playgroundmodule/Sources/Term.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
-				<string>UserModules/EquationParser.playgroundmodule/Sources/Operation.swift</string>
-			</dict>
-			<dict>
-				<key>File</key>
 				<string>UserModules/GraphCalc.playgroundmodule/Sources/Graph.swift</string>
 			</dict>
 			<dict>
@@ -66,11 +58,15 @@
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/EquationParser.playgroundmodule/Sources/Untitled.swift</string>
+				<string>UserModules/GraphCalc.playgroundmodule/Sources/Point.swift</string>
 			</dict>
 			<dict>
 				<key>File</key>
-				<string>UserModules/GraphCalc.playgroundmodule/Sources/Point.swift</string>
+				<string>UserModules/EquationParser.playgroundmodule/Sources/SolvableExpression.swift</string>
+			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/EquationParser.playgroundmodule/Sources/ExpressionHelper.swift</string>
 			</dict>
 		</array>
 		<key>Modified</key>
