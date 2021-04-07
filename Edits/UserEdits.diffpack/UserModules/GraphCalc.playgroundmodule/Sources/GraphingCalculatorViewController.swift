@@ -24,11 +24,8 @@ public class GraphingCalculatorViewController : UIViewController {
         initializeNavbarConstraints()
         initializeGraphInputConstraints()
         initializeGraphConstraints()
+        graphView.currentGraph = Graph(expression: ParseHelper.instance.parseExpression(from: "x^2 + 1", numeric: false))
         graphView.setNeedsDisplay()
-        graphView.currentGraph = Graph(expression: "x^3")
-        UIView.animate(withDuration: 2) { [self] in
-            graphView.currentGraph?.display(for: graphView, xScale: graphView.xMarkerDistance, yScale: graphView.yMarkerDistance)
-        }
     }
     
     func initializeNavbar() {

@@ -3,10 +3,10 @@ import UIKit
 import EquationParser
 
 struct Graph {
-    let expresssion: String
+    let expresssion: SolvableExpression
     var pointData: [Double : Double] = [:]
-    
-    init(expression: String) {
+    let expressionHelper = ExpressionHelper(numeric: false)
+    init(expression: SolvableExpression) {
         self.expresssion = expression
     }
     
@@ -41,7 +41,7 @@ struct Graph {
 extension Graph {
     
     func getPointY(x: Double) -> Double {
-        return ParseHelper.instance.parseExpression(from: expresssion, numeric: false, termValue: x)
+        return expressionHelper.evaluate(expresssion, termValue: x)
     }
     
     func pointForTap(for view: UIView, point: CGPoint, xScale: Double, yScale: Double) -> CGPoint {
@@ -77,9 +77,8 @@ extension Graph {
         layer.addSublayer(circleLayer)
         // Get the points with a stride of 0.01 to add to the path
         let points: [CGPoint] = stride(from: -10, to: 10, by: 0.01).map {
-            let x = round($0 * 100)/100 // Rounded for precision errors
-            let evaluated = ParseHelper.instance.parseExpression(from: expresssion, numeric: false, termValue: x)
-            let y = round(evaluated * 100)/100
+            let x = round($0 * 100)/100 // Rounded for precision error
+            let y = round(expressionHelper.evaluate(expresssion, termValue: x) * 100)/100
             pointData[x] = y
             let xScale = Double(view.bounds.width)/2 + (x * xScale)
             let yScale = Double(view.bounds.height)/2 + (-y * yScale)
