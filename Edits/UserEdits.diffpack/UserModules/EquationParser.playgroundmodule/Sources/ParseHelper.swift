@@ -6,16 +6,16 @@ public class ParseHelper {
     public static var instance = ParseHelper()
     
     /// The main method to parse a string expression and gain an answer either for a purely numeric expression or one with a variable
-    public func parseExpression(from expressionStr: String, numeric: Bool) -> Double {
+    public func parseExpression(from expressionStr: String, numeric: Bool, termValue: Double? = nil) -> Double {
         // Remove all spaces in the string and make it lowercased
         let formattedStr = expressionStr.replacingOccurrences(of: " ", with: "", options: .literal, range: nil).lowercased()
         // Get the result and return
-        return splitAndSolve(expression: formattedStr, numeric: numeric)
+        return splitAndSolve(expression: formattedStr, numeric: numeric, termValue: termValue)
     }
     
     /// The primaty method to handle method splitting and solving, with both numeric and algebraic functions
     /// Takes a string and splits it by parenthesis and solves iteratively
-    private func splitAndSolve(expression: String, numeric: Bool) -> Double {
+    private func splitAndSolve(expression: String, numeric: Bool, termValue: Double? = nil) -> Double {
         // Make sure the expression is formatted correctly
         if expression.countOccurences(of: "(") != expression.countOccurences(of: ")") {
             fatalError("Malformed expression")
@@ -30,19 +30,21 @@ public class ParseHelper {
             // Get a substring from the end to the start of the set (forced as we know the parenthesis count is equal)
             let subString = adjustedExpression.range(of: "(", options: .backwards, range: adjustedExpression.startIndex..<aEndIndex)!
             // Create the solvable expression from the subsection of the expression
-            let expression = createSolvableExpression(subExpression: String(adjustedExpression[subString.upperBound..<aEndIndex]))!
+            let expression = createSolvableExpression(subExpression: String(adjustedExpression[subString.upperBound..<aEndIndex]), numeric: numeric)!
             // Replace the parenthesis section with the newly evaluated subsection
-            adjustedExpression.replaceSubrange(subString.lowerBound...aEndIndex, with: "\(helper.evaluate(expression))")
+            adjustedExpression.replaceSubrange(subString.lowerBound...aEndIndex, with: "\(helper.evaluate(expression, termValue: termValue))")
             // Update the loop
             endIndex = adjustedExpression.firstIndex(of: ")")
         }
-        return helper.evaluate(createSolvableExpression(subExpression: adjustedExpression)!)
+        return helper.evaluate(createSolvableExpression(subExpression: adjustedExpression, numeric: numeric)!, termValue: termValue)
         
     }
     
+    // TODO make this throw an exception
+    
     /// The main method to handle transforming a String equation into a SolvableEquation type
     /// Splits by operation by the order-of-operations hierarchy (PEMDAS) and returns a single SolvableExpression
-    func createSolvableExpression(subExpression: String) -> SolvableExpression? {
+    func createSolvableExpression(subExpression: String, numeric: Bool) -> SolvableExpression? {
         // If the only part of the string is a double (answer already got), return it
         if let answer = Double(subExpression) {
             return .number(answer)
@@ -68,9 +70,12 @@ public class ParseHelper {
             // Gets the terms around the operation
             let lhsItem = terms[index]
             let rhsItem = terms[index + 1]
+            // Check if it's algebraic or not and if it can be a term
+            let lhsIsAlgebraic = !numeric && lhsItem == "x"
+            let rhsIsAlgebraic = !numeric && rhsItem == "x"
             // Checks them against already stored values or parses them
-            let lhs = lhsItem.contains("store") ? allExpressions[lhsItem]! : .number(Double(lhsItem)!)
-            let rhs = rhsItem.contains("store") ? allExpressions[rhsItem]! : .number(Double(rhsItem)!)
+            let lhs = lhsItem.contains("store") ? allExpressions[lhsItem]! : lhsIsAlgebraic ? .term : .number(Double(lhsItem)!)
+            let rhs = rhsItem.contains("store") ? allExpressions[rhsItem]! : rhsIsAlgebraic ? .term : .number(Double(rhsItem)!)
             // Removes the index from the arrays to update the loop below
             operations.remove(at: index)
             terms[index] = "store\(counter)"
@@ -144,4 +149,5 @@ public class ParseHelper {
         
         return expression
     }
+    
 }

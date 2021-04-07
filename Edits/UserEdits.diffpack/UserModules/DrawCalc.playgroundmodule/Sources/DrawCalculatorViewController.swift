@@ -1,5 +1,6 @@
 import UIKit
 import PencilKit
+import EquationParser
 
 /// The UIViewController for the actual Draw Calculator View
 public class DrawCalculatorViewController: UIViewController {
@@ -140,7 +141,17 @@ public class DrawCalculatorViewController: UIViewController {
             expressionLabel.textColor = self.traitCollection.userInterfaceStyle == .dark ? .lightText : .darkText
             expressionLabel.font = .systemFont(ofSize: 50)
             expressionLabel.text = result
+            // TODO Sanitize result
+            print(ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true))
         }
+    }
+    
+    // TODO Test
+    func sanitizeResult(_ result: String) -> String {
+        var formatted = result.lowercased()
+        formatted = formatted.replacingOccurrences(of: "x", with: "*")
+        formatted = formatted.replacingOccurrences(of: "÷", with: "/")
+        return formatted
     }
     
     /// A convenience method to reset the label to its placeholder type state

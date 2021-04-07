@@ -68,6 +68,10 @@
 				<key>File</key>
 				<string>UserModules/EquationParser.playgroundmodule/Sources/ExpressionHelper.swift</string>
 			</dict>
+			<dict>
+				<key>File</key>
+				<string>UserModules/EquationParser.playgroundmodule/Sources/EntryKeyboard.swift</string>
+			</dict>
 		</array>
 		<key>Modified</key>
 		<array>
