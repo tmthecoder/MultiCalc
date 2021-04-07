@@ -1,5 +1,6 @@
 
 import UIKit
+import EquationParser
 
 struct Graph {
     let expresssion: String
@@ -40,7 +41,7 @@ struct Graph {
 extension Graph {
     
     func getPointY(x: Double) -> Double {
-        return x * x;
+        return ParseHelper.instance.parseExpression(from: expresssion, numeric: false, termValue: x)
     }
     
     func pointForTap(for view: UIView, point: CGPoint, xScale: Double, yScale: Double) -> CGPoint {
@@ -77,7 +78,8 @@ extension Graph {
         // Get the points with a stride of 0.01 to add to the path
         let points: [CGPoint] = stride(from: -10, to: 10, by: 0.01).map {
             let x = round($0 * 100)/100 // Rounded for precision errors
-            let y = round(x * x * x * 100)/100
+            let evaluated = ParseHelper.instance.parseExpression(from: expresssion, numeric: false, termValue: x)
+            let y = round(evaluated * 100)/100
             pointData[x] = y
             let xScale = Double(view.bounds.width)/2 + (x * xScale)
             let yScale = Double(view.bounds.height)/2 + (-y * yScale)

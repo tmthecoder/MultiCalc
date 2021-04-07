@@ -44,7 +44,7 @@ class GraphView: UIView {
         let adjPoint = currentGraph.pointForTap(for: self, point: point, xScale: xMarkerDistance, yScale: yMarkerDistance)
         // Transform the values to a localized version
         let xValue = (Double(adjPoint.x) - Double(self.bounds.width/2)) / xMarkerDistance
-        let yValue = (Double(adjPoint.y) - Double(self.bounds.height/2)) / -yMarkerDistance
+        let yValue = currentGraph.getPointY(x: round(xValue * 100)/100)
         // Animate to the position if the view is already shown or create a new one if not
         if let currentPointView = currentPointView {
             UIView.animate(withDuration: 0.5) {
