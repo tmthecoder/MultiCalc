@@ -8,12 +8,24 @@ public class GraphingCalculatorViewController : UIViewController {
     let navigationBar = UINavigationBar()
     let graphInputField = UITextField()
     
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    public override func viewDidLoad() {
+        // Add the subviews
+        view.addSubview(navigationBar)
+        view.insertSubview(graphInputField, belowSubview: navigationBar)
+        view.insertSubview(graphView, belowSubview: graphInputField)
+        // Initialize UI objects
         initializeNavbar()
         initializeGraphField()
         initializeGraph()
+    }
+    
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        initializeNavbarConstraints()
+        initializeGraphInputConstraints()
+        initializeGraphConstraints()
         graphView.currentGraph = Graph(expression: "HI")
+        graphView.setNeedsDisplay()
     }
     
     func initializeNavbar() {
@@ -21,28 +33,18 @@ public class GraphingCalculatorViewController : UIViewController {
         // Create the actual item and add both right bar button items
         let navigationItem = UINavigationItem(title: "Graph")
         navigationBar.setItems([navigationItem], animated: false)
-        if navigationBar.superview == nil {
-            view.addSubview(navigationBar)
-        }
-        initializeNavbarConstraints()
     }
     
     func initializeGraphField() {
         graphInputField.inputView = EntryKeyboard(target: graphInputField, showXVariable: true)
-        view.insertSubview(graphInputField, belowSubview: navigationBar)
         graphInputField.backgroundColor = .systemBackground
         setDoneOnKeyboard()
         graphInputField.textAlignment = .center
         graphInputField.placeholder = "Enter Expression Here..."
-        initializeGraphInputConstraints()
     }
     
     func initializeGraph() {
         view.backgroundColor = .systemBackground
-        if graphView.superview == nil {
-            view.insertSubview(graphView, belowSubview: graphInputField)
-        }
-        initializeGraphConstraints()
     }
     
     func setDoneOnKeyboard() {

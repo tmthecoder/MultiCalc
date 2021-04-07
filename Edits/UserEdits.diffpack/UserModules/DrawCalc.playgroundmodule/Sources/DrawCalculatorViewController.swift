@@ -15,19 +15,24 @@ public class DrawCalculatorViewController: UIViewController {
     
     /// Setup all of the needed items for the canvas (UI and OCR)
     /// Items include a navbar, canvas, and a label for UI along with the OCR and its listener
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+    public override func viewDidLoad() {
+        // Add all subviews
+        view.addSubview(canvas)
+        view.addSubview(navigationBar)
+        view.addSubview(expressionLabel)
         // OCR initialization
         initializeOCR()
         // UI Initialization
         setupNavBar()
-        initializeCanvas()
         initializeLabel()
+        initializeCanvas()
+        resetLabel()
     }
     
-    /// Make sure all constraints and subviews are loaded and then set up the label view
-    public override func viewDidAppear(_ animated: Bool) {
-        resetLabel()
+    /// Re-initialize constraints when the layout changes (bounds or expansion)
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        initializeConstraints()
     }
     
     /// A Method to setup the navigation bar and its shown buttons
@@ -38,9 +43,9 @@ public class DrawCalculatorViewController: UIViewController {
         let navigationItem = UINavigationItem(title: "Draw")
         navigationItem.rightBarButtonItems = [createTrashItem(), createEraseItem()]
         navigationBar.setItems([navigationItem], animated: false)
-        if navigationBar.superview == nil {
-            view.addSubview(navigationBar)
-        }
+//          if navigationBar.superview == nil {
+//              view.addSubview(navigationBar)
+//          }
     }
     
     /// A method to create the item for the canvas clear button
@@ -74,14 +79,14 @@ public class DrawCalculatorViewController: UIViewController {
     /// A method to initialize the drawable PKCanvas with the OCRHandler as its delegate
     /// Sets the default tool as well
     func initializeCanvas() {
-        canvas.backgroundColor = .clear 
+        canvas.backgroundColor = .systemBackground 
         canvas.delegate = ocrHandler
         canvas.becomeFirstResponder()
         canvas.drawingPolicy = .anyInput
         canvas.tool = PKInkingTool(.pen, color: .blue, width: 20)
-        if canvas.superview == nil {
-            view.addSubview(canvas)
-        }
+//          if canvas.superview == nil {
+//              view.addSubview(canvas)
+//          }
     }
     
     /// A method to initialize the top expression label
@@ -91,10 +96,9 @@ public class DrawCalculatorViewController: UIViewController {
         expressionLabel.textAlignment = .center
         expressionLabel.isEditable = false
         expressionLabel.textContainer.maximumNumberOfLines = 1
-        if expressionLabel.superview == nil {
-            view.addSubview(expressionLabel)
-            initializeConstraints()
-        }
+//          if expressionLabel.superview == nil {
+//              view.addSubview(expressionLabel)
+//          }
     }
     
     /// A method to initialize the OCR handler for this ViewController
