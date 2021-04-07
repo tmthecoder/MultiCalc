@@ -4,7 +4,7 @@ import Foundation
 /// A class to store the key's value to add when clucked
 public class KeyButton : UIButton {
     /// The value to add to the textfield when pressed
-    var value: String = ""
+    public var value: String = ""
 }
 
 /// The keyboard object view class
