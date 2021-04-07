@@ -5,7 +5,7 @@ public class ParseHelper {
     /// Create a usable instance as reinitialization is not needed in any matter for equation parsing
     public static var instance = ParseHelper()
     
-    /// The main method to parse a string expression and gain an answer either for a purely numeric expression or one with a variable
+    /// The main method to parse a string expression and gain a SolveableExpression for a purely numeric expression or one with a variable
     public func parseExpression(from expressionStr: String, numeric: Bool) -> SolvableExpression {
         // Remove all spaces in the string and make it lowercased
         let formattedStr = expressionStr.replacingOccurrences(of: " ", with: "", options: .literal, range: nil).lowercased()
@@ -14,7 +14,7 @@ public class ParseHelper {
     }
     
     /// The primaty method to handle method splitting and solving, with both numeric and algebraic functions
-    /// Takes a string and splits it by parenthesis and solves iteratively
+    /// Takes a string and splits it by parenthesis and solves iteratively, returning a final SolvableExpression
     private func splitAndSolve(expression: String, numeric: Bool) -> SolvableExpression {
         // Make sure the expression is formatted correctly
         if expression.countOccurences(of: "(") != expression.countOccurences(of: ")") {
@@ -33,7 +33,7 @@ public class ParseHelper {
             // Create the solvable expression from the subsection of the expression
             let expression = createSolvableExpression(subExpression: String(adjustedExpression[subString.upperBound..<aEndIndex]), numeric: numeric, mainStored: mainStored)!
             mainStored[("mStore\(counter)")] = expression
-            // Replace the parenthesis section with the newly evaluated subsection
+            // Replace the parenthesis section with the key of the newly stored SolvableExpression
             adjustedExpression.replaceSubrange(subString.lowerBound...aEndIndex, with: "mStore\(counter)")
             // Update the loop
             endIndex = adjustedExpression.firstIndex(of: ")")
@@ -161,10 +161,7 @@ public class ParseHelper {
             expression = allExpressions[key]
         }
         
-        print(subExpression)
-        print(mainStored)
-        print(expression)
-        
         return expression
     }
+    
 }
