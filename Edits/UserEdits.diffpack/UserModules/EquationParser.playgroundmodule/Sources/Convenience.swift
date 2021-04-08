@@ -1,3 +1,4 @@
+import Foundation
 
 extension String {
     func countOccurences(of character: Character) -> Int {
@@ -18,5 +19,11 @@ extension String {
             }
         }
         return indices
+    }
+    
+    func split(withRegex regex: NSRegularExpression) -> [String] {
+        let range = NSRange(self.startIndex..., in: self)
+        let replacedStr = regex.stringByReplacingMatches(in: self, range: range, withTemplate: "$SPLIT$")
+        return replacedStr.components(separatedBy: "$SPLIT$")
     }
 }
