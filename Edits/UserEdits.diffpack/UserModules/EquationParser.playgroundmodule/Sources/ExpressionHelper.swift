@@ -1,4 +1,3 @@
-
 import Foundation
 
 /// A class to handle expression evaluation
@@ -27,6 +26,9 @@ public class ExpressionHelper {
         case .term:
             // Return the set termValue
             return termValue!
+        case .negTerm:
+            // Return the set termValue but negated
+            return -termValue!
         case let .add(rhs, lhs):
             // Add both values after recursive evaluation
             return evaluate(rhs, termValue: termValue) + evaluate(lhs, termValue: termValue)

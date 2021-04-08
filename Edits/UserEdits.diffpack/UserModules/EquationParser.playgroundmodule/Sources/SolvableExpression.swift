@@ -5,6 +5,8 @@ public indirect enum SolvableExpression {
     case number(Double)
     /// A variable
     case term
+    /// A negative variable
+    case negTerm
     /// An addition operation
     case add(SolvableExpression, SolvableExpression)
     /// A subtraction operation
