@@ -25,13 +25,8 @@ struct Graph {
     
     private func getActualPoint(pointList: [Point: Double], localizedX: Double) -> Point {
         var reducedPoints: [Double: Point] = [:]
-        let lowestPrecision = pointList.values.sorted(by: <).first!
-        for (point, precision) in pointList {
-            let roundedLowest = round(lowestPrecision * 10000)/10000
-            let roundedCurrent = round(precision * 10000)/10000
-            if roundedLowest == roundedCurrent {
-                reducedPoints[abs(localizedX - point.x)] = point
-            }
+        for (point, _) in pointList {
+            reducedPoints[abs(localizedX - point.x)] = point
         }
         let actualPointDist = reducedPoints.keys.sorted(by: <).first!
         return reducedPoints[actualPointDist]!
@@ -50,7 +45,7 @@ extension Graph {
         let localY = Double(tapY - view.bounds.height/2) / -yScale
         // Use that with the function inverse to get the x-coordinate and get the actual plane coordinate
         let roundedY = round(localY * 100)/100
-        let potentialPoints = getPotentialPoints(precision: 0.05, yValue: roundedY)
+        let potentialPoints = getPotentialPoints(precision: 0.1, yValue: roundedY)
         let localizedX = Double(point.x - view.bounds.width/2) / xScale
         let actualPoint = getActualPoint(pointList: potentialPoints, localizedX: localizedX)
         print(actualPoint.x)
@@ -75,10 +70,21 @@ extension Graph {
         circleLayer.strokeColor = UIColor.systemGray.cgColor
         circleLayer.fillColor = UIColor.systemGray.cgColor
         layer.addSublayer(circleLayer)
-        // Get the points with a stride of 0.01 to add to the path
-        let points: [CGPoint] = stride(from: -10, to: 10, by: 0.01).map {
-            let x = round($0 * 100)/100 // Rounded for precision error
+        let negX = Double(-view.bounds.width/2)/xScale
+        let posX = Double(view.bounds.width/2)/xScale
+        // Create the point array and path
+        var points: [CGPoint] = []
+        let path = CGMutablePath()
+        // Loop through the potential x coordinates with a stride of 0.01
+        for i in stride(from: negX, to: posX, by: 0.01) {
+            let x = round(i * 100)/100 // Rounded for precision error
             let y = round(expressionHelper.evaluate(expresssion, termValue: x) * 100)/100
+            // If we get an indeterminate value, add the line to show separations in the real graph
+            if y.isNaN || y.isInfinite {
+                path.addLines(between: points)
+                points.removeAll()
+                continue
+            }
             pointData[x] = y
             let xScale = Double(view.bounds.width)/2 + (x * xScale)
             let yScale = Double(view.bounds.height)/2 + (-y * yScale)
@@ -89,11 +95,14 @@ extension Graph {
                 let circlePath = UIBezierPath(arcCenter: point, radius: 7, startAngle: 0, endAngle: 2.0 * CGFloat.pi, clockwise: true)
                 circleLayer.path = circlePath.cgPath
             }
-            return point
+            points.append(point)
+        }
+        // Add the line post-loop
+        if points.count > 0 {
+            path.addLines(between: points)
         }
         // Add points to the path and create a copy with a stroked width for hit detection
-        let path = CGMutablePath()
-        path.addLines(between: points)
+        //        path.addLines(between: points)
         layer.path = path.copy(strokingWithWidth: layer.lineWidth, lineCap: .butt, lineJoin: .bevel, miterLimit: layer.miterLimit)
         // Set the actual graph layer as a sublayer of the wider one
         subLayer.path = path
