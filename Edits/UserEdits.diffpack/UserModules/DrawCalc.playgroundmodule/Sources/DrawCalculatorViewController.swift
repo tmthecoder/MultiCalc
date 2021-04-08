@@ -137,7 +137,7 @@ public class DrawCalculatorViewController: UIViewController {
             expressionLabel.font = .systemFont(ofSize: 50)
             expressionLabel.text = result
             // TODO Sanitize result
-            print(helper.evaluate(ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)))
+            print(try! helper.evaluate(ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)))
         }
     }
     
