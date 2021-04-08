@@ -43,9 +43,6 @@ public class DrawCalculatorViewController: UIViewController {
         let navigationItem = UINavigationItem(title: "Draw")
         navigationItem.rightBarButtonItems = [createTrashItem(), createEraseItem()]
         navigationBar.setItems([navigationItem], animated: false)
-//          if navigationBar.superview == nil {
-//              view.addSubview(navigationBar)
-//          }
     }
     
     /// A method to create the item for the canvas clear button
@@ -84,9 +81,6 @@ public class DrawCalculatorViewController: UIViewController {
         canvas.becomeFirstResponder()
         canvas.drawingPolicy = .anyInput
         canvas.tool = PKInkingTool(.pen, color: .blue, width: 20)
-//          if canvas.superview == nil {
-//              view.addSubview(canvas)
-//          }
     }
     
     /// A method to initialize the top expression label
@@ -96,9 +90,6 @@ public class DrawCalculatorViewController: UIViewController {
         expressionLabel.textAlignment = .center
         expressionLabel.isEditable = false
         expressionLabel.textContainer.maximumNumberOfLines = 1
-//          if expressionLabel.superview == nil {
-//              view.addSubview(expressionLabel)
-//          }
     }
     
     /// A method to initialize the OCR handler for this ViewController
@@ -139,14 +130,14 @@ public class DrawCalculatorViewController: UIViewController {
     /// A callback method with a given OCR Result
     /// TODO Parse the result into an Expression and provide a solution
     func onOCRResult(result: String) {
-        //          Expression.parseOperations(expressionString: result)
+        let helper = ExpressionHelper(numeric: true)
         DispatchQueue.main.sync {
             if canvas.drawing.strokes.count == 0 {return}
             expressionLabel.textColor = self.traitCollection.userInterfaceStyle == .dark ? .lightText : .darkText
             expressionLabel.font = .systemFont(ofSize: 50)
             expressionLabel.text = result
             // TODO Sanitize result
-            print(ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true))
+            print(helper.evaluate(ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)))
         }
     }
     

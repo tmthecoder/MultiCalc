@@ -9,8 +9,11 @@ public class ParseHelper {
     public func parseExpression(from expressionStr: String, numeric: Bool) -> SolvableExpression {
         // Remove all spaces in the string and make it lowercased
         let formattedStr = expressionStr.replacingOccurrences(of: " ", with: "", options: .literal, range: nil).lowercased()
+        // Add a multiplication symbol in front of implicit multiplication (ex: '2x' or '2(x+1)')
+        // Use the regex with two capture groups, one for the number, and the other for the term or parenthesis after
+        let expandedStr = formattedStr.replacingOccurrences(of: "([0-9]+)(x|\\()", with: "$1".appending("*$2"), options: .regularExpression)
         // Get the result and return
-        return splitAndSolve(expression: formattedStr, numeric: numeric)
+        return splitAndSolve(expression: expandedStr, numeric: numeric)
     }
     
     /// The primaty method to handle method splitting and solving, with both numeric and algebraic functions
@@ -163,5 +166,4 @@ public class ParseHelper {
         
         return expression
     }
-    
 }
