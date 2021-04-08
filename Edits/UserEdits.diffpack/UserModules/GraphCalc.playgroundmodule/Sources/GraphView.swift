@@ -44,7 +44,8 @@ class GraphView: UIView {
         let adjPoint = currentGraph.pointForTap(for: self, point: point, xScale: xMarkerDistance, yScale: yMarkerDistance)
         // Transform the values to a localized version
         let xValue = (Double(adjPoint.x) - Double(self.bounds.width/2)) / xMarkerDistance
-        let yValue = currentGraph.getPointY(x: round(xValue * 100)/100)
+        let yValue = (Double(adjPoint.y) - Double(self.bounds.height/2)) / -yMarkerDistance
+        //        let yValue = currentGraph.getPointY(x: round(xValue * 100)/100)
         // Animate to the position if the view is already shown or create a new one if not
         if let currentPointView = currentPointView {
             UIView.animate(withDuration: 0.5) {
@@ -62,7 +63,7 @@ class GraphView: UIView {
     }
     
     /// Method to remove the existing layers if they actually exist
-    /// Prevents a redraw of the axis, which may show multiple axes 
+    /// Prevents a redraw of the axis, which may show multiple axes
     /// or dividers
     func removeExistingLayers() {
         xAxisLayer?.removeFromSuperlayer()
@@ -73,8 +74,8 @@ class GraphView: UIView {
         removeCounters()
     }
     
-    /// Method to create each of the four layers. 
-    /// Creates them based on axis and for the separaters, the distance between each 
+    /// Method to create each of the four layers.
+    /// Creates them based on axis and for the separaters, the distance between each
     func createLayers() {
         // Create Axes
         xAxisLayer = drawAxis(xAxis: true)

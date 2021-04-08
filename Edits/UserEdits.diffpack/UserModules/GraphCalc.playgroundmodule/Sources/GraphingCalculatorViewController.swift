@@ -24,7 +24,9 @@ public class GraphingCalculatorViewController : UIViewController {
         initializeNavbarConstraints()
         initializeGraphInputConstraints()
         initializeGraphConstraints()
-        graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: "x^2 + 1", numeric: false))
+        // TODO Setup negatives
+        graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: "1/((x+2)(x-2))", numeric: false))
+        //        graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: "-x^2", numeric: false))
         graphView.setNeedsDisplay()
     }
     
