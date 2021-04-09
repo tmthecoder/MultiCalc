@@ -65,12 +65,20 @@ public class ParseHelper {
         if let answer = Double(subExpression) {
             return .number(answer)
         }
-        
+        // Check for a single term
+        if subExpression == "x" {
+            return .term
+        }
+        // Check for a negatice single term
+        if subExpression == "-x" {
+            return .negTerm
+        }
+        // Check if there's a negative on the term and its a main stored term
         if subExpression.contains("-"),
            let expression = mainStored[String(subExpression.dropFirst())] {
             return .multiply(expression, .number(-1))
         }
-        
+        // Check if its a plainly main stored term
         if let expression = mainStored[subExpression] {
             return expression
         }
