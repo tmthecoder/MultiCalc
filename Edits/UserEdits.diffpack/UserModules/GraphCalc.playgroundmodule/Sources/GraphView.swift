@@ -32,6 +32,12 @@ class GraphView: UIView {
         createLayers()
     }
     
+    func redrawGraph() {
+        currentGraphLayer?.removeFromSuperlayer()
+        currentGraphLayer = currentGraph?.display(for: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
+        layer.addSublayer(currentGraphLayer!)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Get the point that was hit and make sure the point is within the graph bounds
         guard let point = touches.first?.location(in: self),
@@ -45,7 +51,6 @@ class GraphView: UIView {
         // Transform the values to a localized version
         let xValue = (Double(adjPoint.x) - Double(self.bounds.width/2)) / xMarkerDistance
         let yValue = (Double(adjPoint.y) - Double(self.bounds.height/2)) / -yMarkerDistance
-        //        let yValue = currentGraph.getPointY(x: round(xValue * 100)/100)
         // Animate to the position if the view is already shown or create a new one if not
         if let currentPointView = currentPointView {
             UIView.animate(withDuration: 0.5) {

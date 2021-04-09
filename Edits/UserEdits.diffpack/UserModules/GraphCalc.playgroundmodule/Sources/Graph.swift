@@ -48,7 +48,6 @@ extension Graph {
         let potentialPoints = getPotentialPoints(precision: 0.1, yValue: roundedY)
         let localizedX = Double(point.x - view.bounds.width/2) / xScale
         let actualPoint = getActualPoint(pointList: potentialPoints, localizedX: localizedX)
-        print(actualPoint.x)
         let adjX = Double(view.bounds.width)/2 + (actualPoint.x * xScale)
         return CGPoint(x: adjX, y: Double(tapY))
     }
@@ -65,11 +64,6 @@ extension Graph {
         subLayer.lineWidth = 3
         subLayer.fillColor = UIColor.clear.cgColor
         layer.addSublayer(subLayer)
-        // Create the circle layer for the intercept markings
-        let circleLayer = CAShapeLayer()
-        circleLayer.strokeColor = UIColor.systemGray.cgColor
-        circleLayer.fillColor = UIColor.systemGray.cgColor
-        layer.addSublayer(circleLayer)
         let negX = Double(-view.bounds.width/2)/xScale
         let posX = Double(view.bounds.width/2)/xScale
         // Create the point array and path
@@ -90,11 +84,6 @@ extension Graph {
             let yScale = Double(view.bounds.height)/2 + (-y * yScale)
             let point = CGPoint(x: xScale, y: yScale)
             // Plot a small circle if the point is an x or y intercept
-            if x == 0 || y == 0 {
-                // Add a path to the circle layer for intercepts
-                let circlePath = UIBezierPath(arcCenter: point, radius: 7, startAngle: 0, endAngle: 2.0 * CGFloat.pi, clockwise: true)
-                circleLayer.path = circlePath.cgPath
-            }
             points.append(point)
         }
         // Add the line post-loop

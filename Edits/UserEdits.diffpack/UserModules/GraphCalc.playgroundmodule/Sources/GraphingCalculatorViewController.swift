@@ -6,13 +6,14 @@ import EquationParser
 public class GraphingCalculatorViewController : UIViewController {
     let graphView = GraphView()
     let navigationBar = UINavigationBar()
-    let graphInputField = UITextField()
+    let graphExpressionField = UIButton()
+    var loadingOverlay: UIView?
     
     public override func viewDidLoad() {
         // Add the subviews
         view.addSubview(navigationBar)
-        view.insertSubview(graphInputField, belowSubview: navigationBar)
-        view.insertSubview(graphView, belowSubview: graphInputField)
+        view.insertSubview(graphExpressionField, belowSubview: navigationBar)
+        view.insertSubview(graphView, belowSubview: graphExpressionField)
         // Initialize UI objects
         initializeNavbar()
         initializeGraphField()
@@ -24,10 +25,6 @@ public class GraphingCalculatorViewController : UIViewController {
         initializeNavbarConstraints()
         initializeGraphInputConstraints()
         initializeGraphConstraints()
-        // TODO Setup negatives
-        graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: "1/((x+2)(x-2))", numeric: false))
-        //        graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: "-x^2", numeric: false))
-        graphView.setNeedsDisplay()
     }
     
     func initializeNavbar() {
@@ -38,57 +35,26 @@ public class GraphingCalculatorViewController : UIViewController {
     }
     
     func initializeGraphField() {
-        graphInputField.inputView = EntryKeyboard(target: graphInputField, showXVariable: true)
-        graphInputField.backgroundColor = .systemBackground
-        setDoneOnKeyboard()
-        graphInputField.textAlignment = .center
-        graphInputField.placeholder = "Enter Expression Here..."
+        let symbolSize = UIImage.SymbolConfiguration(pointSize: 20)
+        graphExpressionField.addTarget(self, action: #selector(onClicked), for: .touchUpInside)
+        graphExpressionField.setImage(UIImage(systemName: "pencil", withConfiguration: symbolSize), for: .normal)
+        graphExpressionField.semanticContentAttribute = .forceRightToLeft
+        graphExpressionField.imageEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
+        resetGraphLabel()
+    }
+    
+    func resetGraphLabel() {
+        graphExpressionField.setTitle("Set Expression Here...", for: .normal)
+        graphExpressionField.backgroundColor = .systemBackground
+        graphExpressionField.setTitleColor(.placeholderText, for: .normal)
     }
     
     func initializeGraph() {
         view.backgroundColor = .systemBackground
     }
     
-    func setDoneOnKeyboard() {
-        let keyboardToolbar = UIToolbar()
-        keyboardToolbar.sizeToFit()
-        func createCustomBarButton(operation: String, value: String? = nil) -> UIBarButtonItem {
-            let value = value ?? operation
-            let keyButton = KeyButton(type: .system)
-            keyButton.value = value
-            keyButton.setAttributedTitle(NSAttributedString(string: operation, attributes: [.font : UIFont.systemFont(ofSize: 30)]), for: .normal)
-            keyButton.addTarget(self, action: #selector(operationClicked(_:)), for: .touchUpInside)
-            return UIBarButtonItem(customView: keyButton)
-        }
-        let flexBarButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissKeyboard))
-        // Create all of the operation items and center them
-        keyboardToolbar.items = [
-            flexBarButton, flexBarButton, flexBarButton,
-            flexBarButton, flexBarButton,
-            createCustomBarButton(operation: "+"),
-            flexBarButton,
-            createCustomBarButton(operation: "-"),
-            flexBarButton,
-            createCustomBarButton(operation: "x", value: "*"),
-            flexBarButton,
-            createCustomBarButton(operation: "÷"),
-            flexBarButton,
-            createCustomBarButton(operation: "^"),
-            flexBarButton, flexBarButton ,flexBarButton,
-            flexBarButton,doneBarButton
-        ]
-        self.graphInputField.inputAccessoryView = keyboardToolbar
-    }
-    
     @objc func dismissKeyboard() {
         view.endEditing(true)
-    }
-    
-    @objc func operationClicked(_ sender: KeyButton) {
-        if graphInputField.text != nil {
-            graphInputField.text! += sender.value
-        }
     }
     
     func initializeNavbarConstraints() {
@@ -102,12 +68,12 @@ public class GraphingCalculatorViewController : UIViewController {
     }
     
     func initializeGraphInputConstraints() {
-        graphInputField.translatesAutoresizingMaskIntoConstraints = false
+        graphExpressionField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            graphInputField.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
-            graphInputField.leftAnchor.constraint(equalTo: view.leftAnchor),
-            graphInputField.rightAnchor.constraint(equalTo: view.rightAnchor),
-            graphInputField.heightAnchor.constraint(equalToConstant: 60),
+            graphExpressionField.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
+            graphExpressionField.leftAnchor.constraint(equalTo: view.leftAnchor),
+            graphExpressionField.rightAnchor.constraint(equalTo: view.rightAnchor),
+            graphExpressionField.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
     
@@ -115,10 +81,52 @@ public class GraphingCalculatorViewController : UIViewController {
         guard let tabBar = tabBarController?.tabBar else {return}
         graphView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            graphView.topAnchor.constraint(equalTo: graphInputField.bottomAnchor),
+            graphView.topAnchor.constraint(equalTo: graphExpressionField.bottomAnchor),
             graphView.bottomAnchor.constraint(equalTo: tabBar.topAnchor),
             graphView.rightAnchor.constraint(equalTo: view.rightAnchor),
             graphView.leftAnchor.constraint(equalTo: view.leftAnchor)
         ])
+    }
+    
+    func showSpinner() {
+        let spinnerView = UIView(frame: view.bounds)
+        spinnerView.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        let ai = UIActivityIndicatorView.init(style: .medium)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        spinnerView.addSubview(ai)
+        view.addSubview(spinnerView)
+        loadingOverlay = spinnerView
+    }
+    
+    func removeSpinner() {
+        self.loadingOverlay?.removeFromSuperview()
+        self.loadingOverlay = nil
+    }
+    
+    @objc func onClicked() {
+        let alert = UIAlertController(title: "Enter Expression", message: nil, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addTextField(configurationHandler: { textField in
+            let doneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissKeyboard))
+            textField.placeholder = "Enter Here..."
+            textField.inputView = EntryKeyboard(target: textField, showXVariable: true)
+            textField.inputAccessoryView = EntryToolbar.shared.createToolbar(for: textField, dismissItem: doneBarButton)
+        })
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            self.showSpinner()
+            if let graphStr = alert.textFields?.first?.text {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: graphStr, numeric: false))
+                    DispatchQueue.main.sync {
+                        self.graphView.redrawGraph()
+                        self.removeSpinner()
+                        self.graphExpressionField.setTitle(graphStr, for: .normal)
+                        self.graphExpressionField.setTitleColor(self.traitCollection.userInterfaceStyle == .dark ? .white : .black, for: .normal)
+                    }
+                }
+            }
+        }))
+        self.present(alert, animated: true)
     }
 }

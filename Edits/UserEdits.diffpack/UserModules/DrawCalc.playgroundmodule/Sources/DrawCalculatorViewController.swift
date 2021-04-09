@@ -62,7 +62,7 @@ public class DrawCalculatorViewController: UIViewController {
         return UIBarButtonItem(customView: button)
     }
     
-    /// A method to create a generic button with a given image and potential selected image 
+    /// A method to create a generic button with a given image and potential selected image
     func createButtonItem(image: UIImage, selected: UIImage? = nil) -> UIButton {
         let button = UIButton()
         button.setImage(image, for: .normal)
@@ -76,7 +76,7 @@ public class DrawCalculatorViewController: UIViewController {
     /// A method to initialize the drawable PKCanvas with the OCRHandler as its delegate
     /// Sets the default tool as well
     func initializeCanvas() {
-        canvas.backgroundColor = .systemBackground 
+        canvas.backgroundColor = .systemBackground
         canvas.delegate = ocrHandler
         canvas.becomeFirstResponder()
         canvas.drawingPolicy = .anyInput
@@ -137,7 +137,7 @@ public class DrawCalculatorViewController: UIViewController {
             expressionLabel.font = .systemFont(ofSize: 50)
             expressionLabel.text = result
             // TODO Sanitize result
-            print(try! helper.evaluate(ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)))
+            print(helper.evaluate(try! ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)))
         }
     }
     
@@ -175,4 +175,3 @@ public class DrawCalculatorViewController: UIViewController {
         }
     }
 }
-
