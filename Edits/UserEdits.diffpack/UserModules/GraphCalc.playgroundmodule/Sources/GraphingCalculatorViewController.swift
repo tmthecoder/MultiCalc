@@ -62,12 +62,14 @@ public class GraphingCalculatorViewController : UIViewController {
         finishButton.addTarget(self, action: #selector(graphExpression), for: .touchUpInside)
         graphExpressionField.rightView = finishButton
         graphExpressionField.rightViewMode = .always
+        graphExpressionField.inputView = EntryKeyboard(target: graphExpressionField, showXVariable: true)
+        let dismissItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissKeyboard))
+        graphExpressionField.inputAccessoryView = EntryToolbar.shared.createToolbar(for: graphExpressionField, dismissItem: dismissItem)
         resetGraphLabel()
     }
     
     func resetGraphLabel() {
         graphExpressionField.placeholder = "Enter expression Here..."
-        graphExpressionField.rightViewMode = .always
     }
     
     func initializeGraph() {
@@ -76,7 +78,6 @@ public class GraphingCalculatorViewController : UIViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
-        updateGraph()
     }
     
     func initializeNavbarConstraints() {
@@ -132,6 +133,7 @@ public class GraphingCalculatorViewController : UIViewController {
     
     @objc func keyboardDidHide(_ notification: Notification) {
         keyboardActive = false
+        view.setNeedsLayout()
     }
     
     @objc func graphExpression() {
