@@ -6,8 +6,10 @@ import EquationParser
 public class GraphingCalculatorViewController : UIViewController {
     let graphView = GraphView()
     let navigationBar = UINavigationBar()
-    let graphExpressionField = UIButton()
+    //      let graphExpressionField = UIButton()
+    let graphExpressionField = UITextField()
     var loadingOverlay: UIView?
+    var keyboardActive = false
     
     public override func viewDidLoad() {
         // Add the subviews
@@ -20,11 +22,28 @@ public class GraphingCalculatorViewController : UIViewController {
         initializeGraph()
     }
     
+    public override func viewDidAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.keyboardDidShow(_:)),
+            name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(self.keyboardDidHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    public override func viewDidDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillShowNotification)
+        NotificationCenter.default.removeObserver(UIResponder.keyboardWillHideNotification)
+    }
+    
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        initializeNavbarConstraints()
-        initializeGraphInputConstraints()
-        initializeGraphConstraints()
+        if !keyboardActive {
+            initializeNavbarConstraints()
+            initializeGraphInputConstraints()
+            initializeGraphConstraints()
+            graphView.setNeedsDisplay()
+        }
     }
     
     func initializeNavbar() {
@@ -37,16 +56,17 @@ public class GraphingCalculatorViewController : UIViewController {
     func initializeGraphField() {
         let symbolSize = UIImage.SymbolConfiguration(pointSize: 20)
         graphExpressionField.addTarget(self, action: #selector(onClicked), for: .touchUpInside)
-        graphExpressionField.setImage(UIImage(systemName: "pencil", withConfiguration: symbolSize), for: .normal)
+        //          graphExpressionField.setImage(UIImage(systemName: "pencil", withConfiguration: symbolSize), for: .normal)
         graphExpressionField.semanticContentAttribute = .forceRightToLeft
-        graphExpressionField.imageEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
+        //          graphExpressionField.imageEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
         resetGraphLabel()
     }
     
     func resetGraphLabel() {
-        graphExpressionField.setTitle("Set Expression Here...", for: .normal)
+        //          graphExpressionField.setTitle("Set Expression Here...", for: .normal)
+        graphExpressionField.text = "xpression Here..."
         graphExpressionField.backgroundColor = .systemBackground
-        graphExpressionField.setTitleColor(.placeholderText, for: .normal)
+        //          graphExpressionField.setTitleColor(.placeholderText, for: .normal)
     }
     
     func initializeGraph() {
@@ -104,6 +124,14 @@ public class GraphingCalculatorViewController : UIViewController {
         self.loadingOverlay = nil
     }
     
+    @objc func keyboardDidShow(_ notification: Notification) {
+        keyboardActive = true
+    }
+    
+    @objc func keyboardDidHide(_ notification: Notification) {
+        keyboardActive = false
+    }
+    
     @objc func onClicked() {
         let alert = UIAlertController(title: "Enter Expression", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -121,8 +149,8 @@ public class GraphingCalculatorViewController : UIViewController {
                     DispatchQueue.main.sync {
                         self.graphView.redrawGraph()
                         self.removeSpinner()
-                        self.graphExpressionField.setTitle(graphStr, for: .normal)
-                        self.graphExpressionField.setTitleColor(self.traitCollection.userInterfaceStyle == .dark ? .white : .black, for: .normal)
+                        //                          self.graphExpressionField.setTitle(graphStr, for: .normal)
+                        //                          self.graphExpressionField.setTitleColor(self.traitCollection.userInterfaceStyle == .dark ? .white : .black, for: .normal)
                     }
                 }
             }
