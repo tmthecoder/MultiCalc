@@ -54,18 +54,22 @@ public class GraphingCalculatorViewController : UIViewController {
     }
     
     func initializeGraphField() {
+        graphExpressionField.textAlignment = .center
+        graphExpressionField.backgroundColor = .systemBackground
+        let finishButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 60))
         let symbolSize = UIImage.SymbolConfiguration(pointSize: 20)
-        graphExpressionField.addTarget(self, action: #selector(onClicked), for: .touchUpInside)
-        //          graphExpressionField.setImage(UIImage(systemName: "pencil", withConfiguration: symbolSize), for: .normal)
-        graphExpressionField.semanticContentAttribute = .forceRightToLeft
-        //          graphExpressionField.imageEdgeInsets = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 0)
+        let image = UIImage(systemName: "checkmark", withConfiguration: symbolSize)
+        finishButton.setImage(image, for: .normal)        
+        finishButton.addTarget(self, action: #selector(graphExpression), for: .touchUpInside)
+        graphExpressionField.rightView = finishButton
+        graphExpressionField.rightViewMode = .always
         resetGraphLabel()
     }
     
     func resetGraphLabel() {
         //          graphExpressionField.setTitle("Set Expression Here...", for: .normal)
-        graphExpressionField.text = "xpression Here..."
-        graphExpressionField.backgroundColor = .systemBackground
+        graphExpressionField.placeholder = "Enter expression Here..."
+        graphExpressionField.rightViewMode = .always
         //          graphExpressionField.setTitleColor(.placeholderText, for: .normal)
     }
     
@@ -75,6 +79,7 @@ public class GraphingCalculatorViewController : UIViewController {
     
     @objc func dismissKeyboard() {
         view.endEditing(true)
+        updateGraph()
     }
     
     func initializeNavbarConstraints() {
@@ -91,8 +96,8 @@ public class GraphingCalculatorViewController : UIViewController {
         graphExpressionField.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             graphExpressionField.topAnchor.constraint(equalTo: navigationBar.bottomAnchor),
-            graphExpressionField.leftAnchor.constraint(equalTo: view.leftAnchor),
-            graphExpressionField.rightAnchor.constraint(equalTo: view.rightAnchor),
+            graphExpressionField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 40),
+            graphExpressionField.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
             graphExpressionField.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
@@ -132,29 +137,28 @@ public class GraphingCalculatorViewController : UIViewController {
         keyboardActive = false
     }
     
-    @objc func onClicked() {
-        let alert = UIAlertController(title: "Enter Expression", message: nil, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        alert.addTextField(configurationHandler: { textField in
-            let doneBarButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.dismissKeyboard))
-            textField.placeholder = "Enter Here..."
-            textField.inputView = EntryKeyboard(target: textField, showXVariable: true)
-            textField.inputAccessoryView = EntryToolbar.shared.createToolbar(for: textField, dismissItem: doneBarButton)
-        })
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+    @objc func graphExpression() {
+        updateGraph()
+    }
+}
+
+extension GraphingCalculatorViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        updateGraph()
+        return true
+    }
+    
+    func updateGraph() {
+        if let graphStr = graphExpressionField.text {
             self.showSpinner()
-            if let graphStr = alert.textFields?.first?.text {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    self.graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: graphStr, numeric: false))
-                    DispatchQueue.main.sync {
-                        self.graphView.redrawGraph()
-                        self.removeSpinner()
-                        //                          self.graphExpressionField.setTitle(graphStr, for: .normal)
-                        //                          self.graphExpressionField.setTitleColor(self.traitCollection.userInterfaceStyle == .dark ? .white : .black, for: .normal)
-                    }
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: graphStr, numeric: false))
+                DispatchQueue.main.sync {
+                    self.removeSpinner()
+                    self.graphView.setNeedsDisplay()
                 }
             }
-        }))
-        self.present(alert, animated: true)
+        }
     }
 }
