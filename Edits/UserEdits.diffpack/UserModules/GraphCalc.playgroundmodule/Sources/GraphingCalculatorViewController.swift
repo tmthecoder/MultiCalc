@@ -6,7 +6,6 @@ import EquationParser
 public class GraphingCalculatorViewController : UIViewController {
     let graphView = GraphView()
     let navigationBar = UINavigationBar()
-    //      let graphExpressionField = UIButton()
     let graphExpressionField = UITextField()
     var loadingOverlay: UIView?
     var keyboardActive = false
@@ -67,10 +66,8 @@ public class GraphingCalculatorViewController : UIViewController {
     }
     
     func resetGraphLabel() {
-        //          graphExpressionField.setTitle("Set Expression Here...", for: .normal)
         graphExpressionField.placeholder = "Enter expression Here..."
         graphExpressionField.rightViewMode = .always
-        //          graphExpressionField.setTitleColor(.placeholderText, for: .normal)
     }
     
     func initializeGraph() {
