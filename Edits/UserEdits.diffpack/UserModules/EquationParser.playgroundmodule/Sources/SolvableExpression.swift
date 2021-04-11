@@ -17,7 +17,4 @@ public indirect enum SolvableExpression {
     case divide(SolvableExpression, SolvableExpression)
     /// An exponent operation
     case exponent(SolvableExpression, SolvableExpression)
-    //    case sine(SolvableExpression)
-    //    case cosine(SolvableExpression)
-    //    case tangent(SolvableExpression)
 }

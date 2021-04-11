@@ -44,12 +44,6 @@ public class ExpressionHelper {
         case let .exponent(base, power):
             // Return the exponential of both values after recursive evaluation
             return pow(evaluate(base, termValue: termValue), evaluate(power, termValue: termValue))
-        //        case let .sine(num):
-        //            return sin(evaluate(num, termValue: termValue))
-        //        case let .cosine(num):
-        //            return cos(evaluate(num, termValue: termValue))
-        //        case let .tangent(num):
-        //            return tan(evaluate(num, termValue: termValue))
         }
     }
 }

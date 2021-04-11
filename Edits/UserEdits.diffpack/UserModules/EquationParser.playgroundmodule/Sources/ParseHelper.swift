@@ -56,8 +56,6 @@ public class ParseHelper {
         
     }
     
-    // TODO make this throw an exception
-    
     /// The main method to handle transforming a String equation into a SolvableEquation type
     /// Splits by operation by the order-of-operations hierarchy (PEMDAS) and returns a single SolvableExpression
     func createSolvableExpression(subExpression: String, numeric: Bool, mainStored: [String: SolvableExpression]) throws -> SolvableExpression {
@@ -212,5 +210,4 @@ public class ParseHelper {
         
         throw MalformedExpressionError.failedEquationParse("Unable to parse expression from \(subExpression)")
     }
-    
 }
