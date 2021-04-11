@@ -1,28 +1,31 @@
-
-
 import UIKit
 
+/// A class create a coordinate plane and show a graph on top of said coordinate plane
 class GraphView: UIView {
     
-    /// The four varibales to handle the different graph objectts:
-    /// The x-axis and y-axis
-    /// As well as the dividers for each axis
+    /// The current layer that holds the x-axis
     var xAxisLayer: CAShapeLayer?
+    /// The current layer that holds the y-axis
     var yAxisLayer: CAShapeLayer?
+    /// The current layer that holds the dividers for x-axis digits
     var xAxisDividers: CAShapeLayer?
+    /// The current layer that holds the dividers for  y-axis digits
     var yAxisDividers: CAShapeLayer?
     
-    // The variable to control whether a graph is currently displayed
+    /// The current graph that should be shown
     var currentGraph: Graph?
+    /// The shape layer of the current graph
     var currentGraphLayer: CAShapeLayer?
     
-    // Distance between each divider on the graph
+    /// The distance between each x-axis divider
     var xMarkerDistance = 30.0
+    /// The distance between each y-axis divider
     var yMarkerDistance = 30.0
     
-    // Array of UILabels currently being used to display a numerical marker
+    /// Array of UILabels currently being used to display a numerical marker
     var markerValues: [UILabel] = []
     
+    /// The point currently shown on a trace
     var currentPointView: PointValueView?
     
     /// Remove the existing layers if they exist and draw the layers
@@ -32,12 +35,14 @@ class GraphView: UIView {
         createLayers()
     }
     
+    /// A method to redraw only the graph and not any of the axes or dividers
     func redrawGraph() {
         currentGraphLayer?.removeFromSuperlayer()
         currentGraphLayer = currentGraph?.display(for: self, xScale: xMarkerDistance, yScale: yMarkerDistance)
         layer.addSublayer(currentGraphLayer!)
     }
     
+    /// Start the tracing process and show the traced x and y coordinate values on the graph
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // Get the point that was hit and make sure the point is within the graph bounds
         guard let point = touches.first?.location(in: self),
@@ -191,6 +196,7 @@ class GraphView: UIView {
         }
     }
     
+    /// A method to remve the current point view if existing
     func removePointView() {
         currentPointView?.removeFromSuperview()
         currentPointView = nil
