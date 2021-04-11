@@ -1,5 +1,3 @@
-
-
 import UIKit
 import EquationParser
 
@@ -91,13 +89,34 @@ public class GraphingCalculatorViewController : UIViewController {
         if let graphStr = graphExpressionField.text {
             self.showLoadingIndicator()
             DispatchQueue.global(qos: .userInitiated).async {
-                self.graphView.currentGraph = Graph(expression: try! ParseHelper.instance.parseExpression(from: graphStr, numeric: false))
-                DispatchQueue.main.sync {
-                    self.removeLoadingIndicator()
-                    self.graphView.setNeedsDisplay()
+                // Check if the expression can be parsed
+                do {
+                    let expression = try ParseHelper.instance.parseExpression(from: graphStr, numeric: false)
+                    // Set the graph and reload the display
+                    self.graphView.currentGraph = Graph(expression: expression)
+                    DispatchQueue.main.sync {
+                        self.removeLoadingIndicator()
+                        self.graphView.setNeedsDisplay()
+                    }
+                } catch {
+                    // Show the error alert
+                    DispatchQueue.main.sync {
+                        self.removeLoadingIndicator()
+                        self.showErrorAlert()
+                    }
                 }
             }
         }
+    }
+    
+    /// A methdo to show an akert when the equation parse process errors out
+    func showErrorAlert() {
+        // Create the alert with the message and title
+        let alert = UIAlertController(
+            title: "Equation Error", message: "There was an error with your equation. Please enter a fixed equation", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        // Show it
+        self.present(alert, animated: true, completion: nil)
     }
     
     /// A methdo to initialuze all of the constraints for the top navigation bar

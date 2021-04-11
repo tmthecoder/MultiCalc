@@ -137,8 +137,15 @@ public class DrawCalculatorViewController: UIViewController {
             expressionLabel.textColor = self.traitCollection.userInterfaceStyle == .dark ? .lightText : .darkText
             expressionLabel.font = .systemFont(ofSize: 50)
             expressionLabel.text = result
-            // TODO Sanitize result
-            print(helper.evaluate(try! ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)))
+            // Try to parse the result
+            do {
+                // Get the result and show it
+                let expression = try ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)
+                print(helper.evaluate(expression))
+            } catch {
+                // Show the error alert
+                showErrorAlert()
+            }
         }
     }
     
@@ -152,6 +159,16 @@ public class DrawCalculatorViewController: UIViewController {
             // replace division signs with a slash
             .replacingOccurrences(of: "÷", with: "/")
         return formatted
+    }
+    
+    /// A method to show an error when the solver parsing fails
+    func showErrorAlert() {
+        // Create the alert with the message and title
+        let alert = UIAlertController(
+            title: "Solve Error", message: "There was an solving your equation. Please try again", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        // Show it
+        self.present(alert, animated: true, completion: nil)
     }
     
     /// A convenience method to reset the label to its placeholder type state
