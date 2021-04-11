@@ -5,12 +5,13 @@ import EquationParser
 /// The UIViewController for the actual Draw Calculator View
 public class DrawCalculatorViewController: UIViewController {
     
-    // All the class's used UI components
+    /// The canvas that accepts drawing input
     var canvas = PKCanvasView()
+    /// The top navigaton bar
     var navigationBar = UINavigationBar()
+    /// The label that shows the expression
     var expressionLabel = UITextView()
-    
-    // The handler for OCR operations
+    /// The handler for any OCR operations
     var ocrHandler: OCRHandler!
     
     /// Setup all of the needed items for the canvas (UI and OCR)
@@ -141,11 +142,15 @@ public class DrawCalculatorViewController: UIViewController {
         }
     }
     
-    // TODO Test
+    /// A method to sanitize the result by replacing a few character occurrences
+    /// Also replaces commonly mistaken letters with their numeric counterparts
     func sanitizeResult(_ result: String) -> String {
-        var formatted = result.lowercased()
-        formatted = formatted.replacingOccurrences(of: "x", with: "*")
-        formatted = formatted.replacingOccurrences(of: "÷", with: "/")
+        // Lowercase the entire result
+        let formatted = result.lowercased()
+            // replace 'x' with a multiplicatoon sign
+            .replacingOccurrences(of: "x", with: "*")
+            // replace division signs with a slash
+            .replacingOccurrences(of: "÷", with: "/")
         return formatted
     }
     

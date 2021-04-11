@@ -2,18 +2,23 @@ import PencilKit
 import Vision
 import UIKit
 
+/// The format for the completion handler
 public typealias OCRResultHandler = (String) -> ()
 
-public class OCRHandler : NSObject, PKCanvasViewDelegate {
+/// The class to handle all OCR requests and output a string representation of input
+public class OCRHandler : NSObject {
     
+    /// The completion handler to call when a result is found
     let onResult: OCRResultHandler
-    
+    /// The timestamp of the last OCR call
     var timestamp: Int = 0
     
+    /// The initializer to set the completion handler
     public init(onResult: @escaping OCRResultHandler) {
         self.onResult = onResult
     }
     
+    /// The method to get the textual representation of the handwritten input
     func getText(image: CGImage) {
         let requestHandler = VNImageRequestHandler(cgImage: image)
         // Create a new request to recognize text.
@@ -28,6 +33,8 @@ public class OCRHandler : NSObject, PKCanvasViewDelegate {
         }
     }
     
+    /// The method to handle the completion of a request
+    /// Gets all results and if valid signals the completion handler
     func onRecognitionComplete(request: VNRequest, error: Error?) {
         guard let observations =
                 request.results as? [VNRecognizedTextObservation] else {
@@ -39,15 +46,24 @@ public class OCRHandler : NSObject, PKCanvasViewDelegate {
             self.onResult(finalString ?? "")
         }
     }
-    
+}
+
+/// The PKCanvasViewDelegate delegate to handle any canvas changes
+extension OCRHandler : PKCanvasViewDelegate{
+    /// The method to handle any canvas drawing changes (from the delegate)
+    /// Sets a 1.5 second delay on the OCR call and proceeds to call the recognizer if no changes were made
     public func canvasViewDrawingDidChange(_ canvasView: PKCanvasView) {
-        self.timestamp = Int(round(Date().timeIntervalSince1970 * 1000)) 
+        // Get the current timestamp
+        self.timestamp = Int(round(Date().timeIntervalSince1970 * 1000))
+        // Set the following code to execute after a 1.5 sec delay
         DispatchQueue.global(qos: .default).asyncAfter(deadline: .now() + 1.5) {
-            let nowTime = Int(round(Date().timeIntervalSince1970 * 1000)) 
-            print(nowTime - self.timestamp)
+            // Make sure there were no changes within the delay period
+            let nowTime = Int(round(Date().timeIntervalSince1970 * 1000))
+            // Do nothing if there were changes
             if Int(nowTime) - self.timestamp < 1500 {
                 return
             }
+            // Call the OCR handler after getting the image from the canvas view
             DispatchQueue.main.async {
                 let image = canvasView.drawing.image(from: canvasView.bounds, scale: UIScreen.main.scale)
                 DispatchQueue.global(qos: .userInteractive).async {
