@@ -20,7 +20,7 @@
  This is the Draw Calculator, where you can handwrite any
  expression and let the calculator evaluate it for you!
  
- The currencly supported operations include any numeric
+ The currently supported operations include any numeric
  expression with addition, subtraction, multiplication,
  division, and exponents
  
@@ -42,7 +42,7 @@
  again in any combination.
  
  To set your graph, click the top label and enter any equation you
- please! Once you're ready, click the check mark and see your graph
+ please! Once you're ready, click the checkmark and see your graph
  
  If you want to see specific points, just click on the area with your finger
  and the point view should show up!
@@ -53,12 +53,12 @@
  this short tour will come to an end.
  
  We have just one thing to go over. The Core behind both Calculators!
- Both of the Calculators utilize a custom created core parsing library
+ Both of the Calculators utilize a custom-built core parsing library
  written entirely from scratch. 
  
- This parsing library handles everything fromreading the string to 
- splitting it up into a recirsively traversable tree of operations to 
- solve and find an answer. I strongly recommend taking a dive into the
+ This parsing library handles everything from reading the string to 
+ splitting it up into a recursively traversable tree of operations to 
+ solve and find an answer. I strongly recommend diving into the
  parsing library's code if you love algorithmic design and math and want
  to take a look at how I wrote the shared core.
  
