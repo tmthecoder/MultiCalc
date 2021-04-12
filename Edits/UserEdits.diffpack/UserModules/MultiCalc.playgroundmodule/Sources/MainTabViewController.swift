@@ -1,16 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>Diffs</key>
-	<array>
-		<dict>
-			<key>ModifiedContent</key>
-			<string>import PlaygroundSupport
 import UIKit
-
-// Set the current page on the playground to the tab controller
-PlaygroundPage.current.setLiveView(MainTabController())
+import DrawCalc
+import GraphCalc
 
 /// The main Tab Bar Controller for the application
 /// Contains the Draw and Graph calculator view controllers as tabs
@@ -36,27 +26,14 @@ class MainTabController : UITabBarController, UITabBarControllerDelegate {
     
     /// A generic method to assist with the creation of a Tab Bar Item
     /// Simplifies the dulplicate code calls for setting an image and creating the item
-    func createTabBarItem(title: String, image: UIImage, selectedImage: UIImage, controller: UIViewController) -&gt; UIViewController {
+    func createTabBarItem(title: String, image: UIImage, selectedImage: UIImage, controller: UIViewController) -> UIViewController {
         let item = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
         controller.tabBarItem = item
         return controller
     }
     
     /// An override method for the TabBarControllerDelegate to allow tab selection
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -&gt; Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         return true;
     }
 }
-</string>
-			<key>ModifiedRange</key>
-			<string>{0, 2013}</string>
-			<key>OriginalContent</key>
-			<string></string>
-			<key>OriginalRange</key>
-			<string>{0, 0}</string>
-		</dict>
-	</array>
-	<key>FormatVersion</key>
-	<integer>2</integer>
-</dict>
-</plist>

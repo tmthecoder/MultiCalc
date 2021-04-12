@@ -14,9 +14,9 @@
 		<string>Added</string>
 		<key>Chapters/Chapter1.playgroundchapter/Pages/70E8963C-0B5F-43C5-948D-B7FD633AD89B.playgroundpage/main.swift</key>
 		<string>Modified</string>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/UserManifest.plist</key>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/E53FF7F9-B3B8-4EA2-BB13-74E8D03E7221.playgroundpage/UserManifest.plist</key>
 		<string>Added</string>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</key>
+		<key>Chapters/Chapter1.playgroundchapter/Pages/E53FF7F9-B3B8-4EA2-BB13-74E8D03E7221.playgroundpage/main.swift</key>
 		<string>Modified</string>
 		<key>Chapters/Chapter1.playgroundchapter/UserManifest.plist</key>
 		<string>Added</string>
@@ -49,6 +49,8 @@
 		<key>UserModules/GraphCalc.playgroundmodule/Sources/PointValueView.swift</key>
 		<string>Added</string>
 		<key>UserModules/Introduction.playgroundmodule/Sources/IntroView.swift</key>
+		<string>Added</string>
+		<key>UserModules/MultiCalc.playgroundmodule/Sources/MainTabViewController.swift</key>
 		<string>Added</string>
 		<key>UserModules/UserModule.playgroundmodule/Sources/SharedCode.swift</key>
 		<string>Removed</string>
