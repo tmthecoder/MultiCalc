@@ -8,8 +8,7 @@
 	<array>
 		<dict>
 			<key>ModifiedContent</key>
-			<string>//Test
-/*
+			<string>/*
  Welcome to MultiCalc!
  
  MultiCalc is a multi-featured drawable and graphable calculator!
@@ -74,7 +73,7 @@ import UIKit
 PlaygroundPage.current.setLiveView(MainTabController())
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 2231}</string>
+			<string>{0, 2224}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>

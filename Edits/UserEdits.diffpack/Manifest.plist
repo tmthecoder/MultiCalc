@@ -10,10 +10,6 @@
 	<string>PlaygroundBookUserEdit</string>
 	<key>Diffs</key>
 	<dict>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/70E8963C-0B5F-43C5-948D-B7FD633AD89B.playgroundpage/UserManifest.plist</key>
-		<string>Added</string>
-		<key>Chapters/Chapter1.playgroundchapter/Pages/70E8963C-0B5F-43C5-948D-B7FD633AD89B.playgroundpage/main.swift</key>
-		<string>Modified</string>
 		<key>Chapters/Chapter1.playgroundchapter/Pages/D1F2841F-63B3-4FC4-A033-9E982841A311.playgroundpage/UserManifest.plist</key>
 		<string>Added</string>
 		<key>Chapters/Chapter1.playgroundchapter/Pages/D1F2841F-63B3-4FC4-A033-9E982841A311.playgroundpage/main.swift</key>
@@ -47,8 +43,6 @@
 		<key>UserModules/GraphCalc.playgroundmodule/Sources/Point.swift</key>
 		<string>Added</string>
 		<key>UserModules/GraphCalc.playgroundmodule/Sources/PointValueView.swift</key>
-		<string>Added</string>
-		<key>UserModules/Introduction.playgroundmodule/Sources/IntroView.swift</key>
 		<string>Added</string>
 		<key>UserModules/MultiCalc.playgroundmodule/Sources/MainTabViewController.swift</key>
 		<string>Added</string>
