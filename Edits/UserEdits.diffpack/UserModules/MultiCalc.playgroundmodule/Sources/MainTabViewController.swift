@@ -4,17 +4,17 @@ import GraphCalc
 
 /// The main Tab Bar Controller for the application
 /// Contains the Draw and Graph calculator view controllers as tabs
-class MainTabController : UITabBarController, UITabBarControllerDelegate {
+public class MainTabController : UITabBarController, UITabBarControllerDelegate {
     
     /// Set the delegate for this TabBarController
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
     }
     
     /// Create the item for both the Draw and Graph calculator View Controllers
     /// Set their respective images and add them to the tab bar
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let drawController = createTabBarItem(title: "Draw", image: UIImage(systemName: "hand.draw")!, selectedImage: UIImage(systemName: "hand.draw.fill")!, controller: DrawCalculatorViewController())
         let openImage = UIImage(named: "graph")!
@@ -33,7 +33,7 @@ class MainTabController : UITabBarController, UITabBarControllerDelegate {
     }
     
     /// An override method for the TabBarControllerDelegate to allow tab selection
-    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+    public func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         return true;
     }
 }
