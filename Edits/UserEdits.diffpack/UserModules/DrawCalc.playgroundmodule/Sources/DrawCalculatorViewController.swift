@@ -81,7 +81,7 @@ public class DrawCalculatorViewController: UIViewController {
         canvas.delegate = ocrHandler
         canvas.becomeFirstResponder()
         canvas.drawingPolicy = .anyInput
-        canvas.tool = PKInkingTool(.pen, color: .blue, width: 20)
+        canvas.tool = PKInkingTool(.pen, color: .systemBlue, width: 20)
     }
     
     /// A method to initialize the top expression label
@@ -132,19 +132,41 @@ public class DrawCalculatorViewController: UIViewController {
     /// TODO Parse the result into an Expression and provide a solution
     func onOCRResult(result: String) {
         let helper = ExpressionHelper(numeric: true)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        let expressionAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.label,
+            .paragraphStyle: paragraphStyle,
+            .font: UIFont.systemFont(ofSize: 50)
+        ]
+        let answerAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemBlue,
+            .paragraphStyle: paragraphStyle,
+            .font: UIFont.systemFont(ofSize: 50)
+        ]
+        let errorAttributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor.systemRed,
+            .paragraphStyle: paragraphStyle,
+            .font: UIFont.systemFont(ofSize: 50)
+        ]
         DispatchQueue.main.sync {
             if canvas.drawing.strokes.count == 0 {return}
             expressionLabel.textColor = self.traitCollection.userInterfaceStyle == .dark ? .lightText : .darkText
-            expressionLabel.font = .systemFont(ofSize: 50)
-            expressionLabel.text = result
+            let equationText = NSMutableAttributedString(string: result, attributes: expressionAttributes)
+            expressionLabel.attributedText = equationText
+            print(result.replacingOccurrences(of: "x", with: "*", options: [.caseInsensitive]))
             // Try to parse the result
             do {
                 // Get the result and show it
                 let expression = try ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)
-                print(helper.evaluate(expression))
+                equationText.append(NSAttributedString(string: " = \(helper.evaluate(expression))", attributes: answerAttributes))
+                expressionLabel.attributedText = equationText
             } catch {
-                // Show the error alert
-                showErrorAlert()
+                print(error)
+                // Show the error equivalence
+                equationText.append(NSAttributedString(string: " = Error!", attributes: errorAttributes))
+                expressionLabel.attributedText = equationText
+//                  showErrorAlert()
             }
         }
     }
@@ -154,8 +176,10 @@ public class DrawCalculatorViewController: UIViewController {
     func sanitizeResult(_ result: String) -> String {
         // Lowercase the entire result
         let formatted = result.lowercased()
-            // replace 'x' with a multiplicatoon sign
+            // replace 'x' with a multiplicaton sign
             .replacingOccurrences(of: "x", with: "*")
+            // Replace the multiplication unicode with a multiplication sign
+            .replacingOccurrences(of: String(Character(Unicode.Scalar(215)!)), with: "*")
             // replace division signs with a slash
             .replacingOccurrences(of: "÷", with: "/")
         return formatted
@@ -193,7 +217,7 @@ public class DrawCalculatorViewController: UIViewController {
         if sender.isSelected {
             canvas.tool = PKEraserTool(.bitmap)
         } else {
-            canvas.tool = PKInkingTool(.pen, color: .blue, width: 20)
+            canvas.tool = PKInkingTool(.pen, color: .systemBlue, width: 20)
         }
     }
 }
