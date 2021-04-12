@@ -159,15 +159,15 @@ public class DrawCalculatorViewController: UIViewController {
             do {
                 // Get the result and show it
                 let expression = try ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)
-                equationText.append(NSAttributedString(string: " = \(helper.evaluate(expression))", attributes: answerAttributes))
+                let result = round(helper.evaluate(expression) * 100)/100
+                equationText.append(NSAttributedString(string: " = \(result)", attributes: answerAttributes))
                 expressionLabel.attributedText = equationText
             } catch {
                 print(error)
                 // Show the error equivalence
                 equationText.append(NSAttributedString(string: " = Error!", attributes: errorAttributes))
                 expressionLabel.attributedText = equationText
-//                  showErrorAlert()
-            }
+}
         }
     }
     
@@ -183,16 +183,6 @@ public class DrawCalculatorViewController: UIViewController {
             // replace division signs with a slash
             .replacingOccurrences(of: "÷", with: "/")
         return formatted
-    }
-    
-    /// A method to show an error when the solver parsing fails
-    func showErrorAlert() {
-        // Create the alert with the message and title
-        let alert = UIAlertController(
-            title: "Solve Error", message: "There was an solving your equation. Please try again", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        // Show it
-        self.present(alert, animated: true, completion: nil)
     }
     
     /// A convenience method to reset the label to its placeholder type state
