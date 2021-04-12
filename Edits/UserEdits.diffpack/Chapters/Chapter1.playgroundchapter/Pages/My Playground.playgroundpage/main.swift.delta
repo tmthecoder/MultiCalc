@@ -9,15 +9,21 @@
 			<string>import PlaygroundSupport
 import UIKit
 
+// Set the current page on the playground to the tab controller
 PlaygroundPage.current.setLiveView(MainTabController())
 
+/// The main Tab Bar Controller for the application
+/// Contains the Draw and Graph calculator view controllers as tabs
 class MainTabController : UITabBarController, UITabBarControllerDelegate {
     
+    /// Set the delegate for this TabBarController
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
     }
     
+    /// Create the item for both the Draw and Graph calculator View Controllers
+    /// Set their respective images and add them to the tab bar
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let drawController = createTabBarItem(title: "Draw", image: UIImage(systemName: "hand.draw")!, selectedImage: UIImage(systemName: "hand.draw.fill")!, controller: DrawCalculatorViewController())
@@ -28,19 +34,22 @@ class MainTabController : UITabBarController, UITabBarControllerDelegate {
         self.viewControllers = controllers
     }
     
+    /// A generic method to assist with the creation of a Tab Bar Item
+    /// Simplifies the dulplicate code calls for setting an image and creating the item
     func createTabBarItem(title: String, image: UIImage, selectedImage: UIImage, controller: UIViewController) -&gt; UIViewController {
         let item = UITabBarItem(title: title, image: image, selectedImage: selectedImage)
         controller.tabBarItem = item
         return controller
     }
     
+    /// An override method for the TabBarControllerDelegate to allow tab selection
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -&gt; Bool {
         return true;
     }
 }
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 1392}</string>
+			<string>{0, 2013}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
