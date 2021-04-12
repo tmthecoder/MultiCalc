@@ -8,12 +8,72 @@
 	<array>
 		<dict>
 			<key>ModifiedContent</key>
-			<string>import PlaygroundSupport
+			<string>/*
+ Welcome to MultiCalc!
+ 
+ MultiCalc is a multi-featured drawable and graphable calculator!
+ 
+ To get started, all you have to do is click run!
+ */
+
+/*
+ After running, you'll see the screen titled 'Draw'
+ 
+ This is the Draw Calculator, where you can handwrite any
+ expression and let the calculator evaluate it for you!
+ 
+ The currently supported operations include any numeric
+ expression with addition, subtraction, multiplication,
+ division, and exponents
+ 
+ These operators can be combined in any method with the calculator
+ built to follow PEMDAS for any parseable entry!
+ */
+
+/*
+ After you've had your fun with the drawable calculator,
+ read along to proceed!
+ 
+ Our next step is the Graph Calculator.
+ To Access the Graph Calculator, just click the tab on
+ the bottom that says 'Graph' and a coordinate plane should pop up.
+ 
+ The Graph Calculator is built to allow any expression implicitly
+ solving for y (ex: y = x^2), where you enter the expression (x^2). The 
+ Graph calculator supports the same operations as the Draw calculator,
+ again in any combination.
+ 
+ To set your graph, click the top label and enter any equation you
+ please! Once you're ready, click the checkmark and see your graph
+ 
+ If you want to see specific points, just click on the area with your finger
+ and the point view should show up!
+ */
+
+/*
+ Now that you've looked through both the Draw and Graph calculators,
+ this short tour will come to an end.
+ 
+ We have just one thing to go over. The Core behind both Calculators!
+ Both of the Calculators utilize a custom-built core parsing library
+ written entirely from scratch. 
+ 
+ This parsing library handles everything from reading the string to 
+ splitting it up into a recursively traversable tree of operations to 
+ solve and find an answer. I strongly recommend diving into the
+ parsing library's code if you love algorithmic design and math and want
+ to take a look at how I wrote the shared core.
+ 
+ Both the UI Modules (DrawCalc and GraphCalc) along with the parser 
+ module (EquationParser) are heavily documented and encourage any and
+ all experimentation, changes, and education!
+ */
+import PlaygroundSupport
 import UIKit
 PlaygroundPage.current.setLiveView(MainTabController())
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 94}</string>
+			<string>{0, 2224}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>
