@@ -81,6 +81,10 @@ public class GraphingCalculatorViewController : UIViewController {
         graphExpressionField.rightView = finishButton
         graphExpressionField.rightViewMode = .always
         graphExpressionField.placeholder = "Enter expression Here..."
+        // Make sure the field uses our custom input views
+        let dismissItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissKeyboard))
+        graphExpressionField.inputView = EntryKeyboard(target: graphExpressionField, showXVariable: true)
+        graphExpressionField.inputAccessoryView = EntryToolbar.shared.createToolbar(for: graphExpressionField, dismissItem: dismissItem)
     }
     
     /// A method to update the currently shown graph
