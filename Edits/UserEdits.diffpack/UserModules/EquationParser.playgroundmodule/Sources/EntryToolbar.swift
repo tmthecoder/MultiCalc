@@ -41,7 +41,7 @@ public class EntryToolbar {
             flexBarButton,
             createCustomBarButton(operation: "x", value: "*"),
             flexBarButton,
-            createCustomBarButton(operation: "÷"),
+            createCustomBarButton(operation: "÷", value: "/"),
             flexBarButton,
             createCustomBarButton(operation: "^"),
             flexBarButton, flexBarButton, flexBarButton,
