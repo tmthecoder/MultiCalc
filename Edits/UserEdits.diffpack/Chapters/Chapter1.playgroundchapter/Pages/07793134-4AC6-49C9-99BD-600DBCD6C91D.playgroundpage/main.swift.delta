@@ -11,17 +11,17 @@
 			<string>/*
  Welcome to MultiCalc!
  
- MultiCalc is a multi-feature calculator tool written entirely in swift without the use of any third party libraries. Each component, including all user interface screens and the extremely versatile and reusable Equation parsing core has been written from screatch!
+ MultiCalc is a multi-feature calculator written entirely in swift without the use of any third-party libraries. Each component, including all user interface screens and the extremely versatile and reusable Equation parsing core, have been written from scratch!
  
- MultiCalc includes two components across the next two pages with their own similar prose-based tour and application demos. The two features you will be seeing are the Drawable Calculator and the Graphing Calculator.
+ MultiCalc includes two components across over the next two pages with their similar prose-based tour and application demos. The two features you will be seeing are the Drawable Calculator and the Graphing Calculator.
  
- Both Calculators have used various different types of technology with each containing project  containing its own challenges during the build plase. The Drawable Calculaor (DrawCalc) uses a OCR and PencilKit to assist with the UI and parsing of equations. The Graphing Calculator uses the CoreGraphics API with a custom layering process to optimize efficiency. Both calculators depend on the versatile, reusable EquationParser core, which performs all of the actual math, string to equation conversion (for ANY equation, regardless of order of operations), and function calculation for graphing.
+ Both Calculators have used various types of advanced libraries and techniques. The Drawable Calculator (DrawCalc) uses OCR via the Vision Library and PencilKit to assist with the UI and parsing of equations. The Graphing Calculator uses the CoreGraphics API with a custom layering process to optimize efficiency. Both calculators depend on the versatile, reusable EquationParser core, which performs all of the actual math, string to equation conversion (for ANY equation with PEMDAS in mind), and function point calculation.
  
- It's time to get started! Go to the next page to take a look at DrawCalc, the clean, minimal, quick drawable calculator. 
+ It's time to get started! Go to the next page to look at DrawCalc, the clean, minimal, quick drawable calculator. 
  */
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 1241}</string>
+			<string>{0, 1161}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>

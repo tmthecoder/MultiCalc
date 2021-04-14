@@ -9,17 +9,17 @@
 		<dict>
 			<key>ModifiedContent</key>
 			<string>/*
- Welcome to the second part of our tour: The Graphable Calculator or GraphCalc. To get started, hit the run button again.
+ Welcome to the second part of our tour: The Graphable Calculator or GraphCalc. To get started hit the run button again.
  
  You should see the main GraphCalc coordinate plane view.
  
- The Graph Calculator is built to allow any expression implicitly solving for y (ex: y = x^2), where you enter the expression (x^2). The Graph calculator supports the same operations as the Draw calculator, again in any combination with the exemption of multiplication being solely restricted to '*' instead of both '*' and 'x' as 'x' is now used as our variable and division being restricted to '/' instead of both '/' and '÷' as fucntions typically utilize fractional division/.
+ The Graph Calculator is built to allow any expression implicitly solving for y (ex: y = x^2), where you enter the expression (x^2). The Graph calculator supports the same operations as the Draw calculator, again in any combination with the exemption of multiplication being solely restricted to '*' instead of both '*' and 'x' as 'x' is now used as our variable and division being restricted to '/' instead of both '/' and '÷' as functions typically utilize fractional division/.
  
- The keyboard that pops up once tap on the Expression Entry TextField has been custom built for this project, with all numeric, parenthesis, and variable entries on the keyboard itself with the 5 supported operations on the toolbar in blue. Please note that the 'X' at the top signifies multiplication while the black 'x' on the input view signifies the variable 'x'.
+ The keyboard that pops up once tap on the Expression Entry TextField has been custom-built for this project, with all numeric, parenthesis, and variable entries on the keyboard itself with the 5 supported operations on the toolbar in blue. Please note that the 'X' at the top signifies multiplication while the black 'x' on the input view signifies the variable 'x'.
  
  To set your graph, click the top label and enter any equation you please with the operations above! Any function is graphable, including but not limited to polynomials (in standard or factored form), rational expressions, and hyperbolic expressions. Once you're ready, click the checkmark and you'll see your graph appear on the screen!
  
- For further verbosity, GraphCalc includes a trace feature, custom built with paths, point hit testing, and customized layering. To use it, all you need to to is click on the point you'd like to view on the line and a coordinate will pop up onto the screen. Just tap another point to move it, or away from the graph to collapse it. 
+ For further verbosity, GraphCalc includes a trace feature, custom-built with paths, point hit-testing, and customized layering. To use it, all you need to do is click on the point you'd like to view on the line and a coordinate will pop up onto the screen. Just tap another point to move it, or away from the graph to collapse it. 
  */
 
 /*
@@ -32,7 +32,7 @@ import PlaygroundSupport
 PlaygroundPage.current.liveView = GraphingCalculatorViewController()
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 1923}</string>
+			<string>{0, 1922}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>

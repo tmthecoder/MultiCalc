@@ -15,6 +15,8 @@
  
  This is the Draw Calculator, where you can handwrite any expression and let the calculator evaluate it for you! This calculator recommends the use of the Apple Pencil for increased drawing accuracy, though an input from your finger to draw will work as well.
  
+ Just a quick note: The OCR on the calculator uses the Vision library, and OCR, in general, may have its issues with handwritten inputs. To best use DrawCalc, try to space out digits and operations well to prevent incorrect results.
+ 
  Currently, you are free to enter any expression with the addition (+), subtraction (-), multiplication (* or x), division (/ or ÷), and exponential (^) operators. These operators can be combined in any method with the calculator built to follow PEMDAS for any parseable entry!
  
  Once you write your expression, the calculator will solve it for you, and let you know if there were any errors in the solving process. To erase, the top right trash button can be pressed to clear the canvas or the eraser button next to it can be pressed to toggle between the eraser tool (or go back to the pencil) to erase smaller parts of the written expression
@@ -30,7 +32,7 @@ import PlaygroundSupport
 PlaygroundPage.current.liveView = DrawCalculatorViewController()
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 1357}</string>
+			<string>{0, 1592}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>
