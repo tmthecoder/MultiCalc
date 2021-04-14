@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>/*
+ Welcome to the second part of our tour: The Graphable Calculator or GraphCalc. To get started, hit the run button again.
+ 
+ You should see the main GraphCalc coordinate plane view.
+ 
+ The Graph Calculator is built to allow any expression implicitly solving for y (ex: y = x^2), where you enter the expression (x^2). The Graph calculator supports the same operations as the Draw calculator, again in any combination with the exemption of multiplication being solely restricted to '*' instead of both '*' and 'x' as 'x' is now used as our variable and division being restricted to '/' instead of both '/' and '÷' as fucntions typically utilize fractional division/.
+ 
+ The keyboard that pops up once tap on the Expression Entry TextField has been custom built for this project, with all numeric, parenthesis, and variable entries on the keyboard itself with the 5 supported operations on the toolbar in blue. Please note that the 'X' at the top signifies multiplication while the black 'x' on the input view signifies the variable 'x'.
+ 
+ To set your graph, click the top label and enter any equation you please with the operations above! Any function is graphable, including but not limited to polynomials, rational expressions, and  Once you're ready, click the checkmark and see your graph.
+ 
+ If you want to see specific points, just click on the area with your finger and the point view should show up!
+ */
+</string>
+			<key>ModifiedRange</key>
+			<string>{0, 1414}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{0, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>/*
+ Once you feel that you're all finished using the calculators, feel free to proceed to the last page for a brief outro beofre ending this tour!
+ */
+</string>
+			<key>ModifiedRange</key>
+			<string>{1415, 151}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

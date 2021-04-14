@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>/*
+ Now that I've explained a little about MultiCalc, it's time to get started with the first part of the Playground. Hit the run icon on your screen to pull up the Drawable Calculator: DrawCalc!
+ 
+ You should soon see the screen titled 'Draw'.
+ 
+ This is the Draw Calculator, where you can handwrite any expression and let the calculator evaluate it for you! This calculator recommends the use of the Apple Pencil for increased drawing accuracy, though an input from your finger to draw will work as well.
+ 
+ Currently, you are free to enter any expression with the addition (+), subtraction (-), multiplication (* or x), division (/ or ÷), and exponential (^) operators. These operators can be combined in any method with the calculator built to follow PEMDAS for any parseable entry!
+ 
+ Once you write your expression, the calculator will solve it for you, and let you know if there were any errors in the solving process. To erase, the top right trash button can be pressed to clear the canvas or the eraser button next to it can be pressed to toggle between the eraser tool (or go back to the pencil) to erase smaller parts of the written expression
+ */
+</string>
+			<key>ModifiedRange</key>
+			<string>{0, 1159}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{0, 0}</string>
+		</dict>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>/* 
+ When you feel like continuing, press next to move onto the next step in our tour of MultiCalc!
+ */
+</string>
+			<key>ModifiedRange</key>
+			<string>{1160, 104}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
