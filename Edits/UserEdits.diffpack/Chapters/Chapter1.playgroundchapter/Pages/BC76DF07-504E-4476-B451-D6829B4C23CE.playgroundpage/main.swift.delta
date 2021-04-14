@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>/*
+ Well, this concludes our tour of MultiCalc, where you were able to see both calculators' UIs and learn about their design process and used technologies.
+ 
+ Only one thing remains here, a quick explanation about the importance of the EquationParser core and its workings. Surely, by now it's seen that both calculators' modules contain mostly of User Interface classes while all mathematical calculation and string to expression conversion is handed off to the EquationParser module, which is both calculators' and this project's core parsing library.
+ 
+ The EquationParser module was made completely from scratch and is truely the core of this project, starting at the innermost part of a user's entered expression and iterating constantly to build up an expression like those we would visualize and solve were we solving math problems.
+ 
+ Briefly, the EquationParser core handles the entire solving process whether that be splitting up a purely numeric expression and returning an answer or splitting up and parsing a function to allow quick point calculation for. Both processes actually split up the user's entered String into a recursively iterable 'SolvableExpression', where all that's needed is a quick call to evaluate (with a number for functions) to find a numeric answer. The EquationParser allows the application to take any type of equation within the operation set and follow all mathematical rules.
+ 
+ If the mathematical workings behind the parser intrigue you (or the UI components, for that matter), feel free to take a look through the code in any of the modules, all of which is extensively documented for the exact reason of assisting others learn from my work and improve their programming knowledge!
+ 
+ Thank you for looking through this playground and going through the demonstrations I built!
+ */
+</string>
+			<key>ModifiedRange</key>
+			<string>{1, 1826}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{1, 0}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
