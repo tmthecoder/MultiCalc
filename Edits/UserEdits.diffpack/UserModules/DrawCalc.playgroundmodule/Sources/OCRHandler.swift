@@ -43,10 +43,6 @@ public class OCRHandler : NSObject {
         }
         for observation in observations {
             let finalString = observation.topCandidates(1).first?.string
-            finalString?.unicodeScalars.forEach { (scalar) in
-                print(scalar.value)
-            }
-            print(finalString?.contains(Character("1")))
             self.onResult(finalString ?? "")
         }
     }

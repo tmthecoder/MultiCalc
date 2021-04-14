@@ -19,26 +19,23 @@
  
  Once you write your expression, the calculator will solve it for you, and let you know if there were any errors in the solving process. To erase, the top right trash button can be pressed to clear the canvas or the eraser button next to it can be pressed to toggle between the eraser tool (or go back to the pencil) to erase smaller parts of the written expression
  */
-</string>
-			<key>ModifiedRange</key>
-			<string>{0, 1159}</string>
-			<key>OriginalContent</key>
-			<string></string>
-			<key>OriginalRange</key>
-			<string>{0, 0}</string>
-		</dict>
-		<dict>
-			<key>ModifiedContent</key>
-			<string>/* 
- When you feel like continuing, press next to move onto the next step in our tour of MultiCalc!
+
+/* 
+ Once you feel like continuing, press next to move onto the next step in our tour of MultiCalc!
  */
+
+
+
+import PlaygroundSupport
+PlaygroundPage.current.liveView = DrawCalculatorViewController()
 </string>
 			<key>ModifiedRange</key>
-			<string>{1160, 104}</string>
+			<string>{0, 1357}</string>
 			<key>OriginalContent</key>
-			<string></string>
+			<string>
+</string>
 			<key>OriginalRange</key>
-			<string>{1, 0}</string>
+			<string>{0, 1}</string>
 		</dict>
 	</array>
 	<key>FormatVersion</key>

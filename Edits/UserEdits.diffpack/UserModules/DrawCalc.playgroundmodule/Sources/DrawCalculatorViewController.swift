@@ -10,7 +10,7 @@ public class DrawCalculatorViewController: UIViewController {
     /// The top navigaton bar
     var navigationBar = UINavigationBar()
     /// The label that shows the expression
-    var expressionLabel = UITextView()
+    var expressionLabel = UILabel()
     /// The handler for any OCR operations
     var ocrHandler: OCRHandler!
     
@@ -87,10 +87,10 @@ public class DrawCalculatorViewController: UIViewController {
     /// A method to initialize the top expression label
     func initializeLabel() {
         expressionLabel.font = .systemFont(ofSize: 25)
-        expressionLabel.isScrollEnabled = false
+        expressionLabel
         expressionLabel.textAlignment = .center
-        expressionLabel.isEditable = false
-        expressionLabel.textContainer.maximumNumberOfLines = 1
+        expressionLabel.numberOfLines = 1
+        expressionLabel.adjustsFontSizeToFitWidth = true
     }
     
     /// A method to initialize the OCR handler for this ViewController
@@ -100,8 +100,8 @@ public class DrawCalculatorViewController: UIViewController {
     
     /// A method to initialize all of the UI constraints on this ViewController
     func initializeConstraints() {
-        // Get the TabBar
-        let tabBar = tabBarController!.tabBar
+//          // Get the TabBar
+//          let tabBar = tabBarController!.tabBar
         // Set up all constraints for the navigation bar
         navigationBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -122,7 +122,7 @@ public class DrawCalculatorViewController: UIViewController {
         canvas.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             canvas.topAnchor.constraint(equalTo: expressionLabel.bottomAnchor),
-            canvas.bottomAnchor.constraint(equalTo: tabBar.topAnchor),
+            canvas.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             canvas.leftAnchor.constraint(equalTo: view.leftAnchor),
             canvas.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
@@ -134,16 +134,19 @@ public class DrawCalculatorViewController: UIViewController {
         let helper = ExpressionHelper(numeric: true)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
+        // Attributes for the expresssion itself
         let expressionAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.label,
             .paragraphStyle: paragraphStyle,
             .font: UIFont.systemFont(ofSize: 50)
         ]
+        // Attributes for the answer portion of the expression
         let answerAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemBlue,
             .paragraphStyle: paragraphStyle,
             .font: UIFont.systemFont(ofSize: 50)
         ]
+        // Attributes for the error portion of the shown text
         let errorAttributes: [NSAttributedString.Key: Any] = [
             .foregroundColor: UIColor.systemRed,
             .paragraphStyle: paragraphStyle,
@@ -151,23 +154,22 @@ public class DrawCalculatorViewController: UIViewController {
         ]
         DispatchQueue.main.sync {
             if canvas.drawing.strokes.count == 0 {return}
-            expressionLabel.textColor = self.traitCollection.userInterfaceStyle == .dark ? .lightText : .darkText
-            let equationText = NSMutableAttributedString(string: result, attributes: expressionAttributes)
+            // Set the expression to show on the label
+            let sanitizedResult = sanitizeResult(result)
+            let equationText = NSMutableAttributedString(string: sanitizedResult, attributes: expressionAttributes)
             expressionLabel.attributedText = equationText
-            print(result.replacingOccurrences(of: "x", with: "*", options: [.caseInsensitive]))
             // Try to parse the result
             do {
                 // Get the result and show it
-                let expression = try ParseHelper.instance.parseExpression(from: sanitizeResult(result), numeric: true)
+                let expression = try ParseHelper.instance.parseExpression(from: sanitizedResult, numeric: true)
                 let result = round(helper.evaluate(expression) * 100)/100
                 equationText.append(NSAttributedString(string: " = \(result)", attributes: answerAttributes))
                 expressionLabel.attributedText = equationText
             } catch {
-                print(error)
                 // Show the error equivalence
                 equationText.append(NSAttributedString(string: " = Error!", attributes: errorAttributes))
                 expressionLabel.attributedText = equationText
-}
+            }
         }
     }
     

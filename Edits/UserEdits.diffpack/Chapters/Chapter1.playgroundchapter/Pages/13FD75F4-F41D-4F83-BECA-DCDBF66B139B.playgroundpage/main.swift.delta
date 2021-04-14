@@ -17,30 +17,27 @@
  
  The keyboard that pops up once tap on the Expression Entry TextField has been custom built for this project, with all numeric, parenthesis, and variable entries on the keyboard itself with the 5 supported operations on the toolbar in blue. Please note that the 'X' at the top signifies multiplication while the black 'x' on the input view signifies the variable 'x'.
  
- To set your graph, click the top label and enter any equation you please with the operations above! Any function is graphable, including but not limited to polynomials, rational expressions, and  Once you're ready, click the checkmark and see your graph.
+ To set your graph, click the top label and enter any equation you please with the operations above! Any function is graphable, including but not limited to polynomials (in standard or factored form), rational expressions, and hyperbolic expressions. Once you're ready, click the checkmark and you'll see your graph appear on the screen!
  
- If you want to see specific points, just click on the area with your finger and the point view should show up!
+ For further verbosity, GraphCalc includes a trace feature, custom built with paths, point hit testing, and customized layering. To use it, all you need to to is click on the point you'd like to view on the line and a coordinate will pop up onto the screen. Just tap another point to move it, or away from the graph to collapse it. 
  */
+
+/*
+ Once you feel like continuing, press the next page button to move onto our final page in MultiCalc!
+ */
+
+
+
+import PlaygroundSupport
+PlaygroundPage.current.liveView = GraphingCalculatorViewController()
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 1414}</string>
+			<string>{0, 1923}</string>
 			<key>OriginalContent</key>
-			<string></string>
-			<key>OriginalRange</key>
-			<string>{0, 0}</string>
-		</dict>
-		<dict>
-			<key>ModifiedContent</key>
-			<string>/*
- Once you feel that you're all finished using the calculators, feel free to proceed to the last page for a brief outro beofre ending this tour!
- */
+			<string>
 </string>
-			<key>ModifiedRange</key>
-			<string>{1415, 151}</string>
-			<key>OriginalContent</key>
-			<string></string>
 			<key>OriginalRange</key>
-			<string>{1, 0}</string>
+			<string>{0, 1}</string>
 		</dict>
 	</array>
 	<key>FormatVersion</key>

@@ -147,11 +147,11 @@ public class GraphingCalculatorViewController : UIViewController {
     
     /// A method to initialize the constraints for the actual graph view object
     func initializeGraphConstraints() {
-        guard let tabBar = tabBarController?.tabBar else {return}
+//          guard let tabBar = tabBarController?.tabBar else {return}
         graphView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             graphView.topAnchor.constraint(equalTo: graphExpressionField.bottomAnchor),
-            graphView.bottomAnchor.constraint(equalTo: tabBar.topAnchor),
+            graphView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             graphView.rightAnchor.constraint(equalTo: view.rightAnchor),
             graphView.leftAnchor.constraint(equalTo: view.leftAnchor)
         ])
