@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BaseFile</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/Template.playgroundpage/main.swift</string>
+	<key>Diffs</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>/*
+ Welcome to MultiCalc!
+ 
+ MultiCalc is a multi-feature calculator tool written entirely in swift without the use of any third party libraries. Each component, including all user interface screens and the extremely versatile and reusable Equation parsing core has been written from screatch!
+ 
+ MultiCalc includes two components across the next two pages with their own similar prose-based tour and application demos. The two features you will be seeing are the Drawable Calculator and the Graphing Calculator.
+ 
+ Both Calculators have used various different types of technology with each containing project  containing its own challenges during the build plase. The Drawable Calculaor (DrawCalc) uses a OCR and PencilKit to assist with the UI and parsing of equations. The Graphing Calculator uses the CoreGraphics API with a custom layering process to optimize efficiency. Both calculators depend on the versatile, reusable EquationParser core, which performs all of the actual math, string to equation conversion (for ANY equation, regardless of order of operations), and function calculation for graphing.
+ 
+ It's time to get started! Go to the next page to take a look at DrawCalc, the clean, minimal, quick drawable calculator. 
+ */
+</string>
+			<key>ModifiedRange</key>
+			<string>{0, 1241}</string>
+			<key>OriginalContent</key>
+			<string>
+</string>
+			<key>OriginalRange</key>
+			<string>{0, 1}</string>
+		</dict>
+	</array>
+	<key>FormatVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
