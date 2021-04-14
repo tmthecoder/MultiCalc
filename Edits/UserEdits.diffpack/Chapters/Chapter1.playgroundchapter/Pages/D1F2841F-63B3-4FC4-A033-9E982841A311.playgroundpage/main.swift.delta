@@ -32,12 +32,16 @@
  If you want to see specific points, just click on the area with your finger and the point view should show up!
  */
 
+/*
+ Once you feel that you're all finished using the calculators, feel free to proceed to the last page for a brief outro beofre ending this tour!
+ */
+
 import PlaygroundSupport
 import UIKit
 PlaygroundPage.current.setLiveView(MainTabController())
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 1342}</string>
+			<string>{0, 1494}</string>
 			<key>OriginalContent</key>
 			<string>
 </string>
