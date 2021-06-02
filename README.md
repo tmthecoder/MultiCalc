@@ -1,4 +1,4 @@
-### Update 6/1: WWDC21 Swift Student Challenge Winner
+### Update 6/1: WWDC21 Swift Student Challenge Winner!
 
 ## MultiCalc
 
